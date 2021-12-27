@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Material Responsive Tab Bar</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <!-- import the Material stylesheet -->
+    <link rel="stylesheet" href="bundle.css">
+</head>
+
+<body class="mdc-typography">
+    <header class="mdc-top-app-bar mdc-top-app-bar--fixed">
+        <div class="mdc-top-app-bar__row">
+            <div class="mdc-top-app-bar__section mdc-top-app-bar__section--align-end">
+                <button class="mdc-button mdc-button--outlined">
+                    <span class="mdc-button__ripple"></span>
+                    <span class="mdc-button__label">Outlined Button 1 </span>
+                </button>
+                <button class="mdc-button mdc-button--outlined">
+                    <span class="mdc-button__ripple"></span>
+                    <span class="mdc-button__label">Outlined Button 2</span>
+                </button>
+                <button class="mdc-button mdc-button--outlined">
+                    <span class="mdc-button__ripple"></span>
+                    <span class="mdc-button__label">Outlined Button 3</span>
+                </button>
+            </div>
+        </div>
+        <div class="mdc-top-app-bar__row">
+            <section class="mdc-top-app-bar__section">
+                <div class="mdc-tab-bar" role="tablist">
+                    <div class="mdc-tab-scroller mdc-tab-scroller--align-center">
+                        <div class="mdc-tab-scroller__scroll-area">
+                            <div class="mdc-tab-scroller__scroll-content">
+
+                                <button id="ecat-tab" class="mdc-tab mdc-tab--min-width mdc-tab--active" role="tab"
+                                    aria-selected="true" tabindex="0">
+                                    <span class="mdc-tab__content">
+                                        <span class="mdc-tab__text-label">ECAT</span>
+                                    </span>
+                                    <span class="mdc-tab-indicator mdc-tab-indicator--active">
+                                        <span
+                                            class="mdc-tab-indicator__content mdc-tab-indicator__content--underline"></span>
+                                    </span>
+                                    <span class="mdc-tab__ripple"></span>
+                                </button>
+
+                                <button id="status-tab" class="mdc-tab mdc-tab--min-width" role="tab" tabindex="0">
+                                    <span class="mdc-tab__content">
+                                        <span class="mdc-tab__text-label">STATUS</span>
+                                    </span>
+                                    <span class="mdc-tab-indicator">
+                                        <span
+                                            class="mdc-tab-indicator__content mdc-tab-indicator__content--underline"></span>
+                                    </span>
+                                    <span class="mdc-tab__ripple"></span>
+                                </button>
+
+                                <button id="command-tab" class="mdc-tab mdc-tab--min-width" role="tab" tabindex="0">
+                                    <span class="mdc-tab__content">
+                                        <span class="mdc-tab__text-label">COMMAND</span>
+                                    </span>
+                                    <span class="mdc-tab-indicator">
+                                        <span
+                                            class="mdc-tab-indicator__content mdc-tab-indicator__content--underline"></span>
+                                    </span>
+                                    <span class="mdc-tab__ripple"></span>
+                                </button>
+
+                                <button id="joint-tab" class="mdc-tab mdc-tab--min-width" role="tab" tabindex="0">
+                                    <span class="mdc-tab__content">
+                                        <span class="mdc-tab__text-label">JOINT</span>
+                                    </span>
+                                    <span class="mdc-tab-indicator">
+                                        <span
+                                            class="mdc-tab-indicator__content mdc-tab-indicator__content--underline"></span>
+                                    </span>
+                                    <span class="mdc-tab__ripple"></span>
+                                </button>
+
+                                <button id="avatar-tab" class="mdc-tab mdc-tab--min-width" role="tab" tabindex="0">
+                                    <span class="mdc-tab__content">
+                                        <span class="mdc-tab__text-label">AVATAR</span>
+                                    </span>
+                                    <span class="mdc-tab-indicator">
+                                        <span
+                                            class="mdc-tab-indicator__content mdc-tab-indicator__content--underline"></span>
+                                    </span>
+                                    <span class="mdc-tab__ripple"></span>
+                                </button>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </header>
+
+    <main class="main-content">
+        <div class="mdc-top-app-bar--fixed-adjust">
+            <section id="ecat-content" class="tab-content">
+                <h1 class="mdc-typography--headline3">
+                    ECAT
+                </h1>
+                <p>
+                    This simple tab bar template uses Material Components to implement tabs which are centered for
+                    larger screen widths
+                    and scrollable for smaller screen widths. Check it out by resizing the width of your browser window!
+                </p>
+                <p>
+                    Read more about the Material Design <a
+                        href="https://material.io/design/layout/responsive-layout-grid.html">responsive layout grid</a>
+                    and <a href="https://material.io/design/components/tabs.html">tabs</a>.
+                </p>
+            </section>
+
+            <section id="status-content" class="tab-content">
+                <h1 class="mdc-typography--headline3">
+                    Status
+                </h1>
+                <p>
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore
+                    et dolore magna aliqua.
+                    Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+                    consequat. Duis aute irure
+                    dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur
+                    sint occaecat cupidatat non
+                    proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                </p>
+            </section>
+
+            <section id="command-content" class="tab-content">
+                <h1 class="mdc-typography--headline3">
+                    Command
+                </h1>
+                <p>
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore
+                    et dolore magna aliqua.
+                    Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+                    consequat. Duis aute irure
+                    dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur
+                    sint occaecat cupidatat non
+                    proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                </p>
+            </section>
+
+            <section id="joint-content" class="tab-content">
+                <h1 class="mdc-typography--headline3">
+                    Joint
+                </h1>
+                <p>
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore
+                    et dolore magna aliqua.
+                    Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+                    consequat. Duis aute irure
+                    dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur
+                    sint occaecat cupidatat non
+                    proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                </p>
+                <label class="mdc-text-field mdc-text-field--filled">
+                    <span class="mdc-text-field__ripple"></span>
+                    <span class="mdc-floating-label" id="my-label-id">Hint text</span>
+                    <input class="mdc-text-field__input" type="text" aria-labelledby="my-label-id">
+                    <span class="mdc-line-ripple"></span>
+                  </label>
+                  <label class="mdc-text-field mdc-text-field--outlined">
+                    <span class="mdc-notched-outline">
+                      <span class="mdc-notched-outline__leading"></span>
+                      <span class="mdc-notched-outline__notch">
+                        <span class="mdc-floating-label" id="my-label-id">Your Name</span>
+                      </span>
+                      <span class="mdc-notched-outline__trailing"></span>
+                    </span>
+                    <input type="text" class="mdc-text-field__input" aria-labelledby="my-label-id">
+                  </label>
+                  <label class="mdc-text-field mdc-text-field--filled mdc-text-field--textarea mdc-text-field--no-label">
+                    <span class="mdc-text-field__ripple"></span>
+                    <span class="mdc-text-field__resizer">
+                      <textarea class="mdc-text-field__input" rows="8" cols="40" aria-label="Label"></textarea>
+                    </span>
+                    <span class="mdc-line-ripple"></span>
+                  </label>
+            </section>
+
+            <section id="avatar-content" class="tab-content">
+                <h1 class="mdc-typography--headline3">
+                    Avatar
+                </h1>
+                <p>
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore
+                    et dolore magna aliqua.
+                    Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+                    consequat. Duis aute irure
+                    dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur
+                    sint occaecat cupidatat non
+                    proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                </p>
+            </section>
+
+        </div>
+    </main>
+
+    <!-- import the Material javascript file -->
+    <script src="bundle.js" async></script>
+</body>
+
+</html>
