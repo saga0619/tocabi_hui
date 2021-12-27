@@ -6,7 +6,7 @@ import tornado.web
 
 class MainHandler(tornado.web.RequestHandler):
     def get(self):
-        self.render("index_cdn.html",title="Tocabi Server")
+        self.render("index.html",title="Tocabi Server")
 
 application = tornado.web.Application([
         #(r"/roslibjs/(.*)",tornado.web.StaticFileHandler, {'path': "roslibjs/"}),
