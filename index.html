@@ -2,15 +2,19 @@
 <html>
 
 <head>
-    <title>Material Responsive Tab Bar</title>
+    <title>Tocabi Control GUI</title>
     <meta charset="utf-8">
+    <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-
-    <script src="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.js"></script>
-    <link href="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.css" rel="stylesheet">
+    <script src="src/jquery.min.js"></script>
+    <script src="src/material-components-web.min.js"></script>
+    <link href="src/material-components-web.min.css" rel="stylesheet">
     <!-- import the Material stylesheet -->
+    <script>
+
+    </script>
 </head>
 
 <style>
@@ -21,7 +25,7 @@
     :root {
         --mdc-theme-primary: #1EB980;
         --mdc-theme-secondary: #045D56;
-        --mdc-theme-on-primary: #fff;
+        --mdc-theme-on-primary: #000;
         --mdc-theme-on-secondary: #fff;
         --mdc-theme-background: #000;
         --mdc-theme-surface: #363640;
@@ -38,10 +42,14 @@
 
     .content {
         display: none;
+        margin-left: 12px;
+        margin-right: 12px;
     }
 
     .content--active {
         display: block;
+        margin-left: 12px;
+        margin-right: 12px;
     }
 
     .tocabi_content_text {
@@ -51,13 +59,96 @@
     .mdc-dialog .mdc-dialog__content {
         color: var(--mdc-theme-on-surface);
     }
-    
+
+    .status-icons {
+        font-size: 1.5rem;
+    }
+
+    .mdc-button--outlined:not(:disabled) {
+        border-color: rgba(255, 255, 255, 0.658);
+    }
+
+    .system-status-box {
+        width: 70px;
+        height: var(--mdc-protected-button-container-height, 36px);
+        display: flex;
+        justify-content: center;
+        background-color: #484853;
+        margin-left: 10px;
+        border-radius: var(--mdc-shape-small, 4px);
+        vertical-align: middle;
+        align-items: center;
+    }
+
+
+    .system-time-box {
+        width: 150px;
+        height: var(--mdc-protected-button-container-height, 36px);
+        display: flex;
+        justify-content: center;
+        background-color: #484853;
+        margin-right: 10px;
+        border-radius: var(--mdc-shape-small, 4px);
+        vertical-align: middle;
+        align-items: center;
+    }
+
+    .ecat-status-box {
+        width: 100%;
+        margin-bottom: 15px;
+        height: var(--mdc-protected-button-container-height, 36px);
+        display: flex;
+        justify-content: center;
+        background-color: #484853;
+        /* margin-left: 10px; */
+        border-radius: var(--mdc-shape-small, 4px);
+        vertical-align: middle;
+        align-items: center;
+        /* display: inline-block; */
+    }
+
+    .tocabi-status {
+        text-align: center;
+        margin-right: 8px;
+        font-weight: var(--mdc-typography-button-font-weight, 500);
+        font-size: var(--mdc-typography-button-font-size, 0.875rem);
+        color: #fff
+            /* position: relative; */
+    }
+
+    .tocabi_time {
+        font-size: 1.125rem;
+    }
+
+    .joint-field {
+        height: 36px;
+        margin-bottom: 4px;
+        padding-left: 4px;
+        padding-right: 4px;
+    }
+
+    .joint-slider {
+        height: 40px;
+        margin-bottom: 0px;
+        margin-left: 4px;
+        margin-right: 4px;
+    }
+
+    .joint-slider .joint-slider__thumb {
+        height: 40px;
+        width: 40px;
+    }
+
     /* 
     
 
     .mdc-tab-indicator .mdc-tab-indicator__content--underline {
         border-color: white;
     }*/
+
+    .mdc-linear-progress__bar {
+        transition: transform 60ms 0ms cubic-bezier(0.4, 0, 0.6, 1), -webkit-transform 60ms 0ms cubic-bezier(0.4, 0, 0.6, 1)
+    }
 
 
     .mdc-tab .mdc-tab__text-label {
@@ -77,23 +168,95 @@
         margin-top: 0px;
     }
 
+    .command-button {
+        width: 100%;
+        margin-bottom: 15px;
+    }
+
     .ecat-button {
-        width: 200px;
-        margin-top: 20px;
+        width: 100%;
+        /* width: 200px; */
+        margin-bottom: 15px;
     }
 
     .ecat-system-button {
-        width: 200px;
-        margin-top: 20px;
+        width: 100%;
+        /* width: 200px; */
+        margin-bottom: 15px;
         --mdc-theme-primary: #b00020;
+        --mdc-theme-on-primary: #fff;
     }
 
     .emergency-button {
         --mdc-theme-primary: #b00020;
+        --mdc-theme-on-primary: #fff;
     }
 
-    .mdc-linear-progress__bar-inner{
+    .mdc-linear-progress__bar-inner {
         border-top-width: 8px;
+    }
+
+    .mdc-text-field:not(.mdc-text-field--disabled) .mdc-floating-label {
+        color: #fff;
+    }
+
+    .mdc-text-field .mdc-text-field__input {
+        caret-color: #fff;
+    }
+
+    .mdc-text-field--filled:not(.mdc-text-field--disabled) {
+        background-color: #ffffff0d;
+    }
+
+    .mdc-text-field:not(.mdc-text-field--disabled) .mdc-text-field__input {
+        color: #fff;
+    }
+
+    .command-textfield {
+        width: 100%;
+        height: 50px;
+        margin-bottom: 5px;
+    }
+
+    .avatar-select {
+        width: 100%;
+        height: 50px;
+        margin-bottom: 5px;
+
+    }
+
+    .command-select {
+        width: 100%;
+        height: 50px;
+        margin-bottom: 5px;
+    }
+
+    .mdc-select--filled .mdc-select__anchor {
+        height: 50px;
+    }
+
+    .mdc-select--filled:not(.mdc-select--disabled) .mdc-select__anchor {
+        background-color: #ffffff0d;
+    }
+
+    .mdc-select:not(.mdc-select--disabled) .mdc-floating-label {
+        color: #fff;
+    }
+
+    .mdc-select:not(.mdc-select--disabled).mdc-select--focused .mdc-floating-label {
+        color: #1EB980;
+    }
+
+    .mdc-select:not(.mdc-select--disabled) .mdc-select__dropdown-icon {
+        fill: #fff;
+    }
+
+    .mdc-select:not(.mdc-select--disabled) .mdc-select__selected-text {
+        color: #fff;
+    }
+
+    .mdc-menu .mdc-deprecated-list {
+        color: #fff;
     }
 
     /* .mdc-top-app-bar {
@@ -131,17 +294,18 @@
             <section class="mdc-top-app-bar__section mdc-top-app-bar__section--align-end" role="toolbar">
 
 
-
-                <span class="mdc-top-app-bar__title">Time :</span>
-                <span class="mdc-top-app-bar__title" style="width: 100px;">00.00</span>
+                <div class="system-time-box">
+                    <span class="tocabi_time" style="margin-right: 4px;">Time :</span>
+                    <span class="tocabi_time" id="system-time">0000.000</span>
+                </div>
 
                 <div role="progressbar" class="mdc-linear-progress" aria-label="Example Progress Bar" aria-valuemin="0"
-                    aria-valuemax="1" aria-valuenow="0.2" style="margin-top: 0px; width: 120px; height: 8px;">
+                    aria-valuemax="1" aria-valuenow="0.2" style="margin-top: 0px; width: 150px; height: 8px;">
                     <div class="mdc-linear-progress__buffer">
                         <div class="mdc-linear-progress__buffer-bar"></div>
                         <div class="mdc-linear-progress__buffer-dots"></div>
                     </div>
-                    <div class="mdc-linear-progress__bar mdc-linear-progress__primary-bar" >
+                    <div class="mdc-linear-progress__bar mdc-linear-progress__primary-bar">
                         <span class="mdc-linear-progress__bar-inner"></span>
                     </div>
                     <div class="mdc-linear-progress__bar mdc-linear-progress__secondary-bar">
@@ -149,11 +313,13 @@
                     </div>
                 </div>
 
-                <button class="mdc-button mdc-button--raised top-button tocabi-app-bar-button" id="torqueon-button" onclick="linprog.progress=1.0;">
+                <button class="mdc-button mdc-button--raised top-button tocabi-app-bar-button" id="torqueon-button"
+                    onclick="linprog.progress=1.0;">
                     <span class="mdc-button__ripple"></span>
                     <span class="mdc-button__label">Torque ON</span>
                 </button>
-                <button class="mdc-button mdc-button--raised top-button tocabi-app-bar-button" id="torqueoff-button" onclick="linprog.progress=0.0;">
+                <button class="mdc-button mdc-button--raised top-button tocabi-app-bar-button" id="torqueoff-button"
+                    onclick="linprog.progress=0.0;">
                     <span class="mdc-button__ripple"></span>
                     <span class="mdc-button__label">Torque OFF</span>
                 </button>
@@ -162,6 +328,22 @@
         </div>
         <div class="mdc-top-app-bar__row">
             <section class="mdc-top-app-bar__section mdc-top-app-bar__section--align-end" role="toolbar">
+                <div class="system-status-box">
+                    <div class="label tocabi-status">SE </div>
+                    <span class="material-icons se_status status-icons">done</span>
+                </div>
+                <div class="system-status-box">
+                    <div class="label tocabi-status">TC </div>
+                    <span class="material-icons tc_status status-icons">refresh</span>
+                </div>
+                <div class="system-status-box">
+                    <span class="label tocabi-status">IMU</span>
+                    <span class="material-icons imu_status status-icons">clear</span>
+                </div>
+                <div class="system-status-box">
+                    <span class="label tocabi-status">FT </span>
+                    <span class="material-icons ft_status status-icons">change_history</span>
+                </div>
 
                 <button class="mdc-button mdc-button--raised top-button tocabi-app-bar-button emergency-button">
                     <span class="mdc-button__ripple"></span>
@@ -257,7 +439,7 @@
         <div class="content content--active">
             <div class="mdc-layout-grid">
                 <div class="mdc-layout-grid__inner">
-                    <div class="mdc-layout-grid__cell tocabi_content_text">
+                    <div class="mdc-layout-grid__cell--span-2 tocabi_content_text">
                         <button class="mdc-button mdc-button--raised top-button ecat-button">
                             <span class="mdc-button__ripple"></span>
                             <span class="mdc-button__label">Initialize Upper</span>
@@ -292,9 +474,10 @@
                         </button>
 
                     </div>
-                    <div class="mdc-layout-grid__cell tocabi_content_text"></div>
+                    <div class="mdc-layout-grid__cell--span-2 tocabi_content_text"></div>
                     <!-- <div class="mdc-layout-grid__cell tocabi_content_text"></div> -->
-                    <div class="mdc-layout-grid__cell tocabi_content_text">
+                    <!-- <div class="mdc-layout-grid__cell tocabi_content_text"></div> -->
+                    <div class="mdc-layout-grid__cell--span-2 tocabi_content_text">
                         <button class="mdc-button mdc-button--raised top-button ecat-system-button" id="dialog-start">
                             <span class="mdc-button__ripple"></span>
                             <span class="mdc-button__label">System START</span>
@@ -304,8 +487,194 @@
                             <span class="mdc-button__label">System END</span>
                         </button>
                     </div>
+
+                    <div class="mdc-layout-grid__cell--span-2 tocabi_content_text"></div>
+                    <!-- <div class="mdc-layout-grid__cell--span-2 tocabi_content_text">
+                        <div class="ecat-status-row">
+                            <div class="ecat-status-box">
+                                <div class="label tocabi-status">SE </div>
+                                <div class="label tocabi-status">0000 </div>
+                            </div>
+    
+                            <div class="ecat-status-box">
+                                <div class="label tocabi-status">SE </div>
+                                <div class="label tocabi-status">0000 </div>
+                            </div>
+    
+                            <div class="ecat-status-box">
+                                <div class="label tocabi-status">SE </div>
+                                <div class="label tocabi-status">0000 </div>
+                            </div>
+    
+                            <div class="ecat-status-box">
+                                <div class="label tocabi-status">SE </div>
+                                <div class="label tocabi-status">0000 </div>
+                            </div>
+                        </div>
+                        <div class="ecat-status-row">
+                            <div class="ecat-status-box">
+                                <div class="label tocabi-status">SE </div>
+                                <div class="label tocabi-status">0000 </div>
+                            </div>
+    
+                            <div class="ecat-status-box">
+                                <div class="label tocabi-status">SE </div>
+                                <div class="label tocabi-status">0000 </div>
+                            </div>
+    
+                            <div class="ecat-status-box">
+                                <div class="label tocabi-status">SE </div>
+                                <div class="label tocabi-status">0000 </div>
+                            </div>
+    
+                            <div class="ecat-status-box">
+                                <div class="label tocabi-status">SE </div>
+                                <div class="label tocabi-status">0000 </div>
+                            </div>
+                        </div>
+                    </div> -->
                 </div>
             </div>
+
+            <!-- <div class="mdc-layout-grid">
+                <div class="mdc-layout-grid__inner">
+
+                    <div class="mdc-layout-grid__cell">
+                        
+                    </div>
+                </div>
+            </div> -->
+            <div style="height: 30px;"></div>
+            <div class="mdc-layout-grid ecat-status-grid">
+                <div class="mdc-layout-grid__inner">
+                    <div class="mdc-layout-grid__cell--span-1">
+                        <!-- <div class="ecat-status-box">
+                                <div class="label tocabi-status">SE </div>
+                            </div> -->
+                    </div>
+                    <div class="mdc-layout-grid__cell--span-1">
+                        <div class="ecat-status-box">
+                            <div class="label tocabi-status">Lat avg </div>
+                        </div>
+                    </div>
+                    <div class="mdc-layout-grid__cell--span-1">
+                        <div class="ecat-status-box">
+                            <div class="label tocabi-status">Lat max </div>
+                        </div>
+                    </div>
+                    <div class="mdc-layout-grid__cell--span-1">
+                        <div class="ecat-status-box">
+                            <div class="label tocabi-status">Com avg </div>
+                        </div>
+                    </div>
+                    <div class="mdc-layout-grid__cell--span-1">
+                        <div class="ecat-status-box">
+                            <div class="label tocabi-status">Com max </div>
+                        </div>
+                    </div>
+                    <div class="mdc-layout-grid__cell--span-1">
+                        <div class="ecat-status-box">
+                            <div class="label tocabi-status">Com ovf </div>
+                        </div>
+                    </div>
+                    <div class="mdc-layout-grid__cell--span-1">
+                        <div class="ecat-status-box">
+                            <div class="label tocabi-status">cnt </div>
+                        </div>
+                    </div>
+                    <div class="mdc-layout-grid__cell--span-1">
+                        <div class="ecat-status-box">
+                            <div class="label tocabi-status">w cnt</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="mdc-layout-grid__inner">
+                    <div class="mdc-layout-grid__cell--span-1">
+                        <div class="ecat-status-box">
+                            <div class="label tocabi-status">ECAT 1</div>
+                        </div>
+                    </div>
+                    <div class="mdc-layout-grid__cell--span-1">
+                        <div class="ecat-status-box">
+                            <div class="label tocabi-status" id="ecat-status-val">0</div>
+                        </div>
+                    </div>
+                    <div class="mdc-layout-grid__cell--span-1">
+                        <div class="ecat-status-box">
+                            <div class="label tocabi-status" id="ecat-status-val">0</div>
+                        </div>
+                    </div>
+                    <div class="mdc-layout-grid__cell--span-1">
+                        <div class="ecat-status-box">
+                            <div class="label tocabi-status" id="ecat-status-val">0</div>
+                        </div>
+                    </div>
+                    <div class="mdc-layout-grid__cell--span-1">
+                        <div class="ecat-status-box">
+                            <div class="label tocabi-status" id="ecat-status-val">0</div>
+                        </div>
+                    </div>
+                    <div class="mdc-layout-grid__cell--span-1">
+                        <div class="ecat-status-box">
+                            <div class="label tocabi-status" id="ecat-status-val">0</div>
+                        </div>
+                    </div>
+                    <div class="mdc-layout-grid__cell--span-1">
+                        <div class="ecat-status-box">
+                            <div class="label tocabi-status" id="ecat-status-val">0</div>
+                        </div>
+                    </div>
+                    <div class="mdc-layout-grid__cell--span-1">
+                        <div class="ecat-status-box">
+                            <div class="label tocabi-status" id="ecat-status-val">0</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="mdc-layout-grid__inner">
+                    <div class="mdc-layout-grid__cell--span-1">
+                        <div class="ecat-status-box">
+                            <div class="label tocabi-status">ECAT 1</div>
+                        </div>
+                    </div>
+                    <div class="mdc-layout-grid__cell--span-1">
+                        <div class="ecat-status-box">
+                            <div class="label tocabi-status" id="ecat-status-val">0</div>
+                        </div>
+                    </div>
+                    <div class="mdc-layout-grid__cell--span-1">
+                        <div class="ecat-status-box">
+                            <div class="label tocabi-status" id="ecat-status-val">0</div>
+                        </div>
+                    </div>
+                    <div class="mdc-layout-grid__cell--span-1">
+                        <div class="ecat-status-box">
+                            <div class="label tocabi-status" id="ecat-status-val">0</div>
+                        </div>
+                    </div>
+                    <div class="mdc-layout-grid__cell--span-1">
+                        <div class="ecat-status-box">
+                            <div class="label tocabi-status" id="ecat-status-val">0</div>
+                        </div>
+                    </div>
+                    <div class="mdc-layout-grid__cell--span-1">
+                        <div class="ecat-status-box">
+                            <div class="label tocabi-status" id="ecat-status-val">0</div>
+                        </div>
+                    </div>
+                    <div class="mdc-layout-grid__cell--span-1">
+                        <div class="ecat-status-box">
+                            <div class="label tocabi-status" id="ecat-status-val">0</div>
+                        </div>
+                    </div>
+                    <div class="mdc-layout-grid__cell--span-1">
+                        <div class="ecat-status-box">
+                            <div class="label tocabi-status" id="ecat-status-val">0</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
 
 
         </div>
@@ -325,27 +694,369 @@
             </div>
         </div>
         <div class="content">
-            <p class="tocabi_content_text">Content three</p>
-            <div class="mdc-layout-grid mdc-typography">
+            <div class="mdc-layout-grid">
                 <div class="mdc-layout-grid__inner">
-                    <div class="mdc-layout-grid__cell mdc-layout-grid__cell--align-top"></div>
-                    <div class="mdc-layout-grid__cell mdc-layout-grid__cell--align-middle">
-                        <div align="center">
-                            <h1 class="mdc-typography--display2">Testing</h1>
-                        </div>
+                    <div class="mdc-layout-grid__cell--span-2 tocabi_content_text">
                     </div>
-                    <div class="mdc-layout-grid__cell mdc-layout-grid__cell--align-bottom"></div>
+
+
+                    <div class="mdc-layout-grid__cell--span-2 tocabi_content_text">
+                        <label class="mdc-text-field mdc-text-field--filled command-textfield">
+                            <span class="mdc-text-field__ripple"></span>
+                            <span class="mdc-floating-label" id="my-label">COM pos</span>
+                            <input type="number" step="0.01" class="mdc-text-field__input" aria-labelledby="my-label"
+                                value="0.5">
+                            <span class="mdc-line-ripple"></span>
+                        </label>
+                        <label class="mdc-text-field mdc-text-field--filled command-textfield">
+                            <span class="mdc-text-field__ripple"></span>
+                            <span class="mdc-floating-label" id="my-label">Height</span>
+                            <input type="number" step="0.01" class="mdc-text-field__input" aria-labelledby="my-label"
+                                value="0.87">
+                            <span class="mdc-line-ripple"></span>
+                        </label>
+
+                        <div class="mdc-select mdc-select--filled demo-width-class command-select">
+                            <div class="mdc-select__anchor" role="button" aria-haspopup="listbox" aria-expanded="false"
+                                aria-labelledby="demo-label demo-selected-text">
+                                <span class="mdc-select__ripple"></span>
+                                <span id="demo-label" class="mdc-floating-label">Control Mode</span>
+                                <span class="mdc-select__selected-text-container">
+                                    <span id="demo-selected-text" class="mdc-select__selected-text"></span>
+                                </span>
+                                <span class="mdc-select__dropdown-icon">
+                                    <svg class="mdc-select__dropdown-icon-graphic" viewBox="7 10 10 5"
+                                        focusable="false">
+                                        <polygon class="mdc-select__dropdown-icon-inactive" stroke="none"
+                                            fill-rule="evenodd" points="7 10 12 15 17 10">
+                                        </polygon>
+                                        <polygon class="mdc-select__dropdown-icon-active" stroke="none"
+                                            fill-rule="evenodd" points="7 15 12 10 17 15">
+                                        </polygon>
+                                    </svg>
+                                </span>
+                                <span class="mdc-line-ripple"></span>
+                            </div>
+
+                            <div class="mdc-select__menu mdc-menu mdc-menu-surface mdc-menu-surface--fullwidth">
+                                <ul class="mdc-deprecated-list" role="listbox" aria-label="Food picker listbox">
+                                    <li class="mdc-deprecated-list-item mdc-deprecated-list-item--selected"
+                                        aria-selected="true" data-value="" role="option">
+                                        <span class="mdc-deprecated-list-item__ripple"></span>
+                                    </li>
+                                    <li class="mdc-deprecated-list-item" aria-selected="false" data-value="0"
+                                        role="option">
+                                        <span class="mdc-deprecated-list-item__ripple"></span>
+                                        <span class="mdc-deprecated-list-item__text">0. COM pos</span>
+                                    </li>
+                                    <li class="mdc-deprecated-list-item" aria-selected="false" data-value="1"
+                                        role="option">
+                                        <span class="mdc-deprecated-list-item__ripple"></span>
+                                        <span class="mdc-deprecated-list-item__text">1. COM pos + rot</span>
+                                    </li>
+                                    <li class="mdc-deprecated-list-item" aria-selected="false" data-value="2"
+                                        role="option">
+                                        <span class="mdc-deprecated-list-item__ripple"></span>
+                                        <span class="mdc-deprecated-list-item__text">2</span>
+                                    </li>
+                                    <li class="mdc-deprecated-list-item" aria-selected="false" data-value="3"
+                                        role="option">
+                                        <span class="mdc-deprecated-list-item__ripple"></span>
+                                        <span class="mdc-deprecated-list-item__text">3</span>
+                                    </li>
+                                    <li class="mdc-deprecated-list-item" aria-selected="false" data-value="4"
+                                        role="option">
+                                        <span class="mdc-deprecated-list-item__ripple"></span>
+                                        <span class="mdc-deprecated-list-item__text">4</span>
+                                    </li>
+                                    <li class="mdc-deprecated-list-item" aria-selected="false" data-value="5"
+                                        role="option">
+                                        <span class="mdc-deprecated-list-item__ripple"></span>
+                                        <span class="mdc-deprecated-list-item__text">5</span>
+                                    </li>
+                                    <li class="mdc-deprecated-list-item" aria-selected="false" data-value="6"
+                                        role="option">
+                                        <span class="mdc-deprecated-list-item__ripple"></span>
+                                        <span class="mdc-deprecated-list-item__text">6</span>
+                                    </li>
+                                    <li class="mdc-deprecated-list-item" aria-selected="false" data-value="7"
+                                        role="option">
+                                        <span class="mdc-deprecated-list-item__ripple"></span>
+                                        <span class="mdc-deprecated-list-item__text">7</span>
+                                    </li>
+                                    <li class="mdc-deprecated-list-item" aria-selected="false" data-value="8"
+                                        role="option">
+                                        <span class="mdc-deprecated-list-item__ripple"></span>
+                                        <span class="mdc-deprecated-list-item__text">8</span>
+                                    </li>
+                                    <li class="mdc-deprecated-list-item" aria-selected="false" data-value="9"
+                                        role="option">
+                                        <span class="mdc-deprecated-list-item__ripple"></span>
+                                        <span class="mdc-deprecated-list-item__text">9</span>
+                                    </li>
+                                    <li class="mdc-deprecated-list-item" aria-selected="false" data-value="10"
+                                        role="option">
+                                        <span class="mdc-deprecated-list-item__ripple"></span>
+                                        <span class="mdc-deprecated-list-item__text">10 CC1</span>
+                                    </li>
+                                    <li class="mdc-deprecated-list-item" aria-selected="false" data-value="11"
+                                        role="option">
+                                        <span class="mdc-deprecated-list-item__ripple"></span>
+                                        <span class="mdc-deprecated-list-item__text">11 CC2</span>
+                                    </li>
+                                    <li class="mdc-deprecated-list-item" aria-selected="false" data-value="12"
+                                        role="option">
+                                        <span class="mdc-deprecated-list-item__ripple"></span>
+                                        <span class="mdc-deprecated-list-item__text">12 CC3</span>
+                                    </li>
+                                    <li class="mdc-deprecated-list-item" aria-selected="false" data-value="13"
+                                        role="option">
+                                        <span class="mdc-deprecated-list-item__ripple"></span>
+                                        <span class="mdc-deprecated-list-item__text">13 CC4</span>
+                                    </li>
+                                    <li class="mdc-deprecated-list-item" aria-selected="false" data-value="14"
+                                        role="option">
+                                        <span class="mdc-deprecated-list-item__ripple"></span>
+                                        <span class="mdc-deprecated-list-item__text">14 CC5</span>
+                                    </li>
+                                </ul>
+                            </div>
+
+
+
+                        </div>
+                        <button class="mdc-button mdc-button--raised top-button command-button">
+                            <span class="mdc-button__ripple"></span>
+                            <span class="mdc-button__label">Command</span>
+                        </button>
+                        <!-- <div class="mdc-select mdc-select--filled -->
+
+                    </div>
+
+                    <div class="mdc-layout-grid__cell--span-2 tocabi_content_text">
+                    </div>
+
+                    <div class="mdc-layout-grid__cell--span-2 tocabi_content_text">
+                        <button class="mdc-button mdc-button--raised top-button command-button">
+                            <span class="mdc-button__ripple"></span>
+                            <span class="mdc-button__label">Init Yaw</span>
+                        </button>
+                        <button class="mdc-button mdc-button--raised top-button command-button">
+                            <span class="mdc-button__ripple"></span>
+                            <span class="mdc-button__label">State Estimate</span>
+                        </button>
+                        <div style="height: 40px;"></div>
+                        <button class="mdc-button mdc-button--raised top-button command-button">
+                            <span class="mdc-button__ripple"></span>
+                            <span class="mdc-button__label">Gravity Control</span>
+                        </button>
+                        <button class="mdc-button mdc-button--raised top-button command-button">
+                            <span class="mdc-button__ripple"></span>
+                            <span class="mdc-button__label">Position Control</span>
+                        </button>
+                        <button class="mdc-button mdc-button--raised top-button command-button">
+                            <span class="mdc-button__ripple"></span>
+                            <span class="mdc-button__label">Position+DOB</span>
+                        </button>
+                        <button class="mdc-button mdc-button--raised top-button command-button">
+                            <span class="mdc-button__ripple"></span>
+                            <span class="mdc-button__label">Position Grav</span>
+                        </button>
+                        <button class="mdc-button mdc-button--raised top-button command-button">
+                            <span class="mdc-button__ripple"></span>
+                            <span class="mdc-button__label">Torque Redis</span>
+                        </button>
+
+                        <div style="height: 40px;"></div>
+                        <button class="mdc-button mdc-button--raised top-button command-button">
+                            <span class="mdc-button__ripple"></span>
+                            <span class="mdc-button__label">CMD : MODE 12</span>
+                        </button>
+                        <button class="mdc-button mdc-button--raised top-button command-button">
+                            <span class="mdc-button__ripple"></span>
+                            <span class="mdc-button__label">CMD : MODE 13</span>
+                        </button>
+
+                    </div>
                 </div>
             </div>
 
         </div>
+
         </div>
+
         <div class="content">
-            <p class="tocabi_content_text">Content four</p>
+            <div id="joint_tab_content"></div>
+            <!-- <p class="tocabi_content_text">Content four</p> -->
+            <!-- <button id="basic-switch" class="mdc-switch mdc-switch--unselected" type="button" role="switch"
+                aria-checked="false">
+                <div class="mdc-switch__track"></div>
+                <div class="mdc-switch__handle-track">
+                    <div class="mdc-switch__handle">
+                        <div class="mdc-switch__shadow">
+                            <div class="mdc-elevation-overlay"></div>
+                        </div>
+                        <div class="mdc-switch__ripple"></div>
+                        <div class="mdc-switch__icons">
+                            <svg class="mdc-switch__icon mdc-switch__icon--on" viewBox="0 0 24 24">
+                                <path d="M19.69,5.23L8.96,15.96l-4.23-4.23L2.96,13.5l6,6L21.46,7L19.69,5.23z" />
+                            </svg>
+                            <svg class="mdc-switch__icon mdc-switch__icon--off" viewBox="0 0 24 24">
+                                <path d="M20 13H4v-2h16v2z" />
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+            </button>
+            <label for="basic-switch">off/on</label> -->
+
+            <!-- <div class="mdc-slider my-slider1">
+                <input class="mdc-slider__input" type="range" min="0" max="100" value="50" name="volume"
+                    aria-label="Continuous slider demo">
+                <div class="mdc-slider__track">
+                    <div class="mdc-slider__track--inactive"></div>
+                    <div class="mdc-slider__track--active">
+                        <div class="mdc-slider__track--active_fill"></div>
+                    </div>
+                </div>
+                <div class="mdc-slider__thumb">
+                    <div class="mdc-slider__thumb-knob"></div>
+                </div>
+            </div> -->
+
+
+
+
 
         </div>
         <div class="content">
-            <p class="tocabi_content_text">Content five</p>
+            <div class="mdc-layout-grid">
+                <div class="mdc-layout-grid__inner">
+                    <div class="mdc-layout-grid__cell--span-2 tocabi_content_text">
+                    </div>
+                    <div class="mdc-layout-grid__cell--span-2 tocabi_content_text">
+                        <div class="mdc-select mdc-select--filled demo-width-class avatar-select">
+                            <div class="mdc-select__anchor" role="button" aria-haspopup="listbox" aria-expanded="false"
+                                aria-labelledby="demo-label demo-selected-text">
+                                <span class="mdc-select__ripple"></span>
+                                <span id="demo-label" class="mdc-floating-label">Avatar Mode</span>
+                                <span class="mdc-select__selected-text-container">
+                                    <span id="demo-selected-text" class="mdc-select__selected-text"></span>
+                                </span>
+                                <span class="mdc-select__dropdown-icon">
+                                    <svg class="mdc-select__dropdown-icon-graphic" viewBox="7 10 10 5"
+                                        focusable="false">
+                                        <polygon class="mdc-select__dropdown-icon-inactive" stroke="none"
+                                            fill-rule="evenodd" points="7 10 12 15 17 10">
+                                        </polygon>
+                                        <polygon class="mdc-select__dropdown-icon-active" stroke="none"
+                                            fill-rule="evenodd" points="7 15 12 10 17 15">
+                                        </polygon>
+                                    </svg>
+                                </span>
+                                <span class="mdc-line-ripple"></span>
+                            </div>
+
+                            <div class="mdc-select__menu mdc-menu mdc-menu-surface mdc-menu-surface--fullwidth">
+                                <ul class="mdc-deprecated-list" role="listbox" aria-label="Food picker listbox">
+                                    <li class="mdc-deprecated-list-item mdc-deprecated-list-item--selected"
+                                        aria-selected="true" data-value="" role="option">
+                                        <span class="mdc-deprecated-list-item__ripple"></span>
+                                    </li>
+                                    <li class="mdc-deprecated-list-item" aria-selected="false" data-value="1"
+                                        role="option">
+                                        <span class="mdc-deprecated-list-item__ripple"></span>
+                                        <span class="mdc-deprecated-list-item__text">0. Init Pose</span>
+                                    </li>
+                                    <li class="mdc-deprecated-list-item" aria-selected="false" data-value="2"
+                                        role="option">
+                                        <span class="mdc-deprecated-list-item__ripple"></span>
+                                        <span class="mdc-deprecated-list-item__text">1. Zero Pose</span>
+                                    </li>
+                                    <li class="mdc-deprecated-list-item" aria-selected="false" data-value="3"
+                                        role="option">
+                                        <span class="mdc-deprecated-list-item__ripple"></span>
+                                        <span class="mdc-deprecated-list-item__text">2. Freezing</span>
+                                    </li>
+                                    <li class="mdc-deprecated-list-item" aria-selected="false" data-value="4"
+                                        role="option">
+                                        <span class="mdc-deprecated-list-item__ripple"></span>
+                                        <span class="mdc-deprecated-list-item__text">3. Ready Pose</span>
+                                    </li>
+                                    <li class="mdc-deprecated-list-item" aria-selected="false" data-value="5"
+                                        role="option">
+                                        <span class="mdc-deprecated-list-item__ripple"></span>
+                                        <span class="mdc-deprecated-list-item__text">4. Head Only targeting</span>
+                                    </li>
+                                    <li class="mdc-deprecated-list-item" aria-selected="false" data-value="6"
+                                        role="option">
+                                        <span class="mdc-deprecated-list-item__ripple"></span>
+                                        <span class="mdc-deprecated-list-item__text">5. Motion
+                                            Retargeting(HQPIK1)</span>
+                                    </li>
+                                    <li class="mdc-deprecated-list-item" aria-selected="false" data-value="7"
+                                        role="option">
+                                        <span class="mdc-deprecated-list-item__ripple"></span>
+                                        <span class="mdc-deprecated-list-item__text">6. Motion
+                                            Retargeting(HQPIK2)</span>
+                                    </li>
+                                    <li class="mdc-deprecated-list-item" aria-selected="false" data-value="8"
+                                        role="option">
+                                        <span class="mdc-deprecated-list-item__ripple"></span>
+                                        <span class="mdc-deprecated-list-item__text">7. Absolute Hand-Pose
+                                            Mapping</span>
+                                    </li>
+                                    <li class="mdc-deprecated-list-item" aria-selected="false" data-value="9"
+                                        role="option">
+                                        <span class="mdc-deprecated-list-item__ripple"></span>
+                                        <span class="mdc-deprecated-list-item__text">8. Proportional Hand-pose
+                                            Mapping</span>
+                                    </li>
+                                    <li class="mdc-deprecated-list-item" aria-selected="false" data-value="10"
+                                        role="option">
+                                        <span class="mdc-deprecated-list-item__ripple"></span>
+                                        <span class="mdc-deprecated-list-item__text">10. N/A</span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <button class="mdc-button mdc-button--raised top-button command-button">
+                            <span class="mdc-button__ripple"></span>
+                            <span class="mdc-button__label">Send Mode</span>
+                        </button>
+
+                        <div style="height:50px"></div>
+
+                        <button class="mdc-button mdc-button--raised top-button command-button">
+                            <span class="mdc-button__ripple"></span>
+                            <span class="mdc-button__label">Still Pose Calibration</span>
+                        </button>
+                        <button class="mdc-button mdc-button--raised top-button command-button">
+                            <span class="mdc-button__ripple"></span>
+                            <span class="mdc-button__label">T Pose Calibration</span>
+                        </button>
+                        <button class="mdc-button mdc-button--raised top-button command-button">
+                            <span class="mdc-button__ripple"></span>
+                            <span class="mdc-button__label">Forward Calibration</span>
+                        </button>
+                        <button class="mdc-button mdc-button--raised top-button command-button">
+                            <span class="mdc-button__ripple"></span>
+                            <span class="mdc-button__label">Calibration reset</span>
+                        </button>
+                        <button class="mdc-button mdc-button--raised top-button command-button">
+                            <span class="mdc-button__ripple"></span>
+                            <span class="mdc-button__label">Load Saved Calibration</span>
+                        </button>
+
+                    </div>
+                </div>
+                <div class="mdc-layout-grid__inner">
+
+                </div>
+            </div>
+            <!-- <p class="tocabi_content_text">AVATAR TAB</p> -->
+
+
         </div>
         <div class="content">
             <p class="tocabi_content_text">Content six</p>
@@ -370,6 +1081,10 @@
             </label>
         </div>
     </main>
+
+
+
+
 
     <div class="mdc-dialog">
         <div class="mdc-dialog__container">
@@ -424,13 +1139,11 @@
     <!-- <script src="bundle.js" async></script> -->
     <script>
         var dialogEls = Array.from(document.querySelectorAll('.mdc-dialog'));
-
         const dialog_start = new mdc.dialog.MDCDialog(dialogEls[0]);
         document.querySelector('#dialog-start').addEventListener('click', function (evt) {
             event.preventDefault(evt);
             dialog_start.lastFocusedTarget = evt.target;
             dialog_start.open();
-
         })
 
         const dialog_end = new mdc.dialog.MDCDialog(dialogEls[1]);
@@ -460,6 +1173,12 @@
             document.querySelector('.content--active').classList.remove('content--active');
             // Show content for newly-activated tab
             contentEls[event.detail.index].classList.add('content--active');
+
+            if (event.detail.index == 3) {
+                jsld.forEach(function (ele) {
+                    ele.layout();
+                })
+            }
         });
 
         var textFields = document.querySelectorAll('.mdc-text-field');
@@ -475,9 +1194,81 @@
         })
 
         const linprog = new mdc.linearProgress.MDCLinearProgress(document.querySelector('.mdc-linear-progress'));
-        linprog.progress = 0.4;
+        //linprog.progress = 0.4;
 
-        // document.querySelector('#torqueon-button').addEventListener('click',function(evt){
+
+        // var sliders = document.querySelectorAll('.my-slider1');
+        // sliders.forEach(element => {
+        //     var sld = new mdc.slider.MDCSlider(element);
+        //     sld.root.addEventListener('MDCSlider:input', (e) => console.log(linprog.progress = sld.getValue() / 100));
+        // })
+
+        //Joint Tab Script!
+
+        function print_dat(value){
+            console.log(value);
+        }
+
+        var jsld = []
+        var jtfd = []
+
+        $("#joint_tab_content").load("src/joint_tab.html", function () {
+            var joint_tab = document.querySelector('#joint_tab_content');
+
+            var jsliders = joint_tab.querySelectorAll('.joint-slider');
+            jsliders.forEach(function (ele, idx) {
+                jsld.push(new mdc.slider.MDCSlider(ele));
+            });
+
+            var jtextfield = joint_tab.querySelectorAll('.joint-field');
+            jtextfield.forEach(function(ele, idx){
+                jtfd.push(new mdc.textField.MDCTextField(ele));
+            });
+
+            jsld[0].root.addEventListener('MDCSlider:input',function(){
+                console.log(1);
+            })
+        });
+
+
+
+
+
+
+
+
+
+        // const slider_ = new mdc.slider.MDCSlider(document.querySelector('.mdc-slider'));
+        // slider_.root.addEventListener('MDCSlider:input', function () {
+        //     linprog.progress = slider_.getValue() / 100;
+
+        //     document.querySelector('#system-time').innerText = slider_.getValue() / 100;
+
+        //     console.log(linprog.progress = slider_.getValue() / 100);
+
+        // });
+
+        for (const el of document.querySelectorAll('.mdc-switch')) {
+            const switchControl = new mdc.switchControl.MDCSwitch(el);
+        }
+
+        const select = new mdc.select.MDCSelect(document.querySelector('.mdc-select'));
+
+        select.listen('MDCSelect:change', () => {
+            console.log(select.value);
+        })
+
+        const select2 = new mdc.select.MDCSelect(document.querySelector('.avatar-select'));
+
+        select2.listen('MDCSelect:change', () => {
+            console.log(select2.value);
+        })
+
+
+        // setTimeout(() => {
+        //     this.slider_.layout();
+        // }, 100);
+                    // document.querySelector('#torqueon-button').addEventListener('click',function(evt){
         //     linprog.progress=1.0;
         // })
 

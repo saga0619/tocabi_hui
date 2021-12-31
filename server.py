@@ -9,10 +9,10 @@ class MainHandler(tornado.web.RequestHandler):
         self.render("index.html",title="Tocabi Server")
 
 application = tornado.web.Application([
-        #(r"/roslibjs/(.*)",tornado.web.StaticFileHandler, {'path': "roslibjs/"}),
-        # (r"/node_modules/(.*)",tornado.web.StaticFileHandler, {'path' : "node_modules/"}),
-        # (r"/src/(.*)",tornado.web.StaticFileHandler, {'path' : "src/"}),
-        #(r"/src/(.*)",tornado.web.StaticFileHandler, {'path' : "src/"}),
+        (r"/roslibjs/(.*)",tornado.web.StaticFileHandler, {'path': "roslibjs/"}),
+        (r"/EventEmitter2/(.*)",tornado.web.StaticFileHandler, {'path': "EventEmitter2/"}),
+        (r"/material-design-icons/(.*)",tornado.web.StaticFileHandler, {'path' : "material-design-icons/"}),
+        (r"/src/(.*)",tornado.web.StaticFileHandler, {'path' : "src/"}),
         (r"/", MainHandler)
     ])
 

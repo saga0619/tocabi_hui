@@ -1,0 +1,6 @@
+[submodule "roslibjs"]
+	path = roslibjs
+	url = https://github.com/RobotWebTools/roslibjs
+[submodule "EventEmitter2"]
+	path = EventEmitter2
+	url = https://github.com/EventEmitter2/EventEmitter2
