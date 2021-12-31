@@ -8,8 +8,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
     <!-- <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons"> -->
+    <link rel="shortcut icon" href="#">
     <script src="src/jquery.min.js"></script>
     <script src="src/material-components-web.min.js"></script>
+    <script type="text/javascript" src="/EventEmitter2/lib/eventemitter2.js"></script>
+    <script type="text/javascript" src="/roslibjs/build/roslib.js"></script>
+    <script src="src/ros_com.js"></script>
     <link href="src/material-components-web.min.css" rel="stylesheet">
     <link href="src/roboto.css" rel="stylesheet">
     <!-- import the Material stylesheet -->
@@ -368,7 +372,7 @@
                             <div class="mdc-tab-scroller__scroll-content">
                                 <button class="mdc-tab mdc-tab--active" role="tab" aria-selected="true" tabindex="0">
                                     <span class="mdc-tab__content">
-                                        <span class="mdc-tab__text-label">ECAT</span>
+                                        <span class="mdc-tab__text-label">SYSTEM</span>
                                     </span>
                                     <span class="mdc-tab-indicator mdc-tab-indicator--active">
                                         <span
@@ -441,35 +445,35 @@
             <div class="mdc-layout-grid">
                 <div class="mdc-layout-grid__inner">
                     <div class="mdc-layout-grid__cell--span-2 tocabi_content_text">
-                        <button class="mdc-button mdc-button--raised top-button ecat-button">
+                        <button class="mdc-button mdc-button--raised top-button ecat-button" onclick="tocabi_commander('ecatinit');">
                             <span class="mdc-button__ripple"></span>
                             <span class="mdc-button__label">Initialize Upper</span>
                         </button>
-                        <button class="mdc-button mdc-button--raised top-button ecat-button">
+                        <button class="mdc-button mdc-button--raised top-button ecat-button" onclick="tocabi_commander('ecatinitwaist');">
                             <span class="mdc-button__ripple"></span>
                             <span class="mdc-button__label">Initialize Waist</span>
                         </button>
-                        <button class="mdc-button mdc-button--raised top-button ecat-button">
+                        <button class="mdc-button mdc-button--raised top-button ecat-button" onclick="tocabi_commander('ecatinitlower');">
                             <span class="mdc-button__ripple"></span>
                             <span class="mdc-button__label">Initialize Lower</span>
                         </button>
-                        <button class="mdc-button mdc-button--raised top-button ecat-button">
+                        <button class="mdc-button mdc-button--raised top-button ecat-button" onclick="tocabi_commander('safetyreset');">
                             <span class="mdc-button__ripple"></span>
                             <span class="mdc-button__label">Safety Reset</span>
                         </button>
-                        <button class="mdc-button mdc-button--raised top-button ecat-button">
+                        <button class="mdc-button mdc-button--raised top-button ecat-button" onclick="tocabi_commander('safetydisable');">
                             <span class="mdc-button__ripple"></span>
                             <span class="mdc-button__label">Safety Disable</span>
                         </button>
-                        <button class="mdc-button mdc-button--raised top-button ecat-button">
+                        <button class="mdc-button mdc-button--raised top-button ecat-button" onclick="tocabi_commander('ftcalib');">
                             <span class="mdc-button__ripple"></span>
                             <span class="mdc-button__label">FT Calibration</span>
                         </button>
-                        <button class="mdc-button mdc-button--raised top-button ecat-button">
+                        <button class="mdc-button mdc-button--raised top-button ecat-button" onclick="tocabi_commander('imureset');">
                             <span class="mdc-button__ripple"></span>
                             <span class="mdc-button__label">IMU EF Reset</span>
                         </button>
-                        <button class="mdc-button mdc-button--raised top-button ecat-button">
+                        <button class="mdc-button mdc-button--raised top-button ecat-button" onclick="tocabi_commander('forceload');">
                             <span class="mdc-button__ripple"></span>
                             <span class="mdc-button__label">Force Load ZP</span>
                         </button>
@@ -1096,7 +1100,7 @@
                 </div>
                 <div class="mdc-dialog__actions">
                     <button type="button" class="mdc-button mdc-dialog__button" id="confirm-start-tocabi"
-                        ata-mdc-dialog-action="cancel">
+                        ata-mdc-dialog-action="cancel" onclick="tocabi_starter();">
                         <div class="mdc-button__ripple"></div>
                         <span class="mdc-button__label">Confirm</span>
                     </button>
@@ -1119,7 +1123,7 @@
                 </div>
                 <div class="mdc-dialog__actions">
                     <button type="button" class="mdc-button mdc-dialog__button" id="confirm-end-tocabi"
-                        data-mdc-dialog-action="cancel">
+                        data-mdc-dialog-action="cancel" onclick="tocabi_stopper();">
                         <div class="mdc-button__ripple"></div>
                         <span class="mdc-button__label">Confirm</span>
                     </button>
