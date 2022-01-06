@@ -364,7 +364,7 @@ var sysstatate_sub = new ROSLIB.Topic({
     messageType: 'std_msgs/Int8MultiArray'
 });
 
-sysstatate_sub.subscribe(function(message){
+sysstatate_sub.subscribe(function (message) {
     message.data[0]; //imu
     message.data[1]; //ecat1
     message.data[2];//ft
@@ -374,19 +374,30 @@ sysstatate_sub.subscribe(function(message){
 
     var e1 = document.querySelector('.e1_status');
     var e2 = document.querySelector('.e2_status');
-    var e2 = document.querySelector('.e2_status');
 
-    if(message.data[1]==0)
-    {
+    //refresh done clear change_history
+
+    if (message.data[1] == 0) {
+        e1.innerText = 'clear';
+    }
+    else if (message.data[1] == 1) {
+        e1.innerText = 'change_history';
 
     }
-    else if(message.data[1]==1)
-    {
+    else if (message.data[1] == 2) {
+        e1.innerText = 'done';
+    }
+
+
+    if (message.data[3] == 0) {
+        e2.innerText = 'clear';
+    }
+    else if (message.data[3] == 1) {
+        e2.innerText = 'change_history';
 
     }
-    else if(message.data[1] ==2)
-    {
-
+    else if (message.data[3] == 2) {
+        e2.innerText = 'done';
     }
 
 
@@ -418,21 +429,21 @@ com_status_sub.subscribe(function (message) {
 
     comsf = document.querySelectorAll('#comstatus')
 
-    comsf[0] = message.data[0];
-    comsf[1] = message.data[1];
-    comsf[2] = message.data[2];
-    comsf[3] = message.data[3];
-    comsf[4] = parseInt(message.data[4]);
-    comsf[5] = parseInt(message.data[10]);
-    comsf[6] = parseInt(message.data[11]);
+    comsf[0].innerText = message.data[0].toFixed(3);
+    comsf[1].innerText = message.data[1].toFixed(3);
+    comsf[2].innerText = message.data[2].toFixed(3);
+    comsf[3].innerText = message.data[3].toFixed(3);
+    comsf[4].innerText = parseInt(message.data[4]);
+    comsf[5].innerText = parseInt(message.data[10]);
+    comsf[6].innerText = parseInt(message.data[12]);
 
-    comsf[7] = message.data[5];
-    comsf[8] = message.data[6];
-    comsf[9] = message.data[7];
-    comsf[10] = message.data[8];
-    comsf[11] = parseInt(message.data[9]);
-    comsf[12] = parseInt(message.data[12]);
-    comsf[13] = parseInt(message.data[13]);
+    comsf[7].innerText = message.data[5].toFixed(3);
+    comsf[8].innerText = message.data[6].toFixed(3);
+    comsf[9].innerText = message.data[7].toFixed(3);
+    comsf[10].innerText = message.data[8].toFixed(3);
+    comsf[11].innerText = parseInt(message.data[9]);
+    comsf[12].innerText = parseInt(message.data[11]);
+    comsf[13].innerText = parseInt(message.data[13]);
 
     // p1_progress = message.data[14] * 100.0;
     linprog.progress = message.data[14];
