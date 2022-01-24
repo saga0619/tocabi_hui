@@ -13,7 +13,7 @@ class MainHandler(tornado.web.RequestHandler):
         self.render("index.html",title="Tocabi Server")
 
 application = tornado.web.Application([
-        (r"/roslibjs/(.*)",tornado.web.StaticFileHandler, {'path': pkg_dir+"/roslibjs/"}),
+        # (r"/roslibjs/(.*)",tornado.web.StaticFileHandler, {'path': pkg_dir+"/roslibjs/"}),
         (r"/EventEmitter2/(.*)",tornado.web.StaticFileHandler, {'path': pkg_dir+"/EventEmitter2/"}),
         (r"/material-design-icons/(.*)",tornado.web.StaticFileHandler, {'path' : pkg_dir+"/material-design-icons/"}),
         (r"/src/(.*)",tornado.web.StaticFileHandler, {'path' : pkg_dir+"/src/"}),
