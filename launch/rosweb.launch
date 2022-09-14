@@ -1,7 +1,9 @@
 <launch>
     <include file="$(find rosbridge_server)/launch/rosbridge_websocket.launch">
         <arg name="port" value="9090"/>
-        <arg name="address" value="192.168.0.11"/>
+        <arg name="address" value="192.168.10.100"/>
+        <arg name="unregister_timeout" value="10000000"/>
+        <!-- <param name="/unregister_timeout" value="10000000"/> -->
         <!-- <arg name="" -->
     </include>
     <node pkg="tocabi_hui" name="tocabi_hui" type="server.py" output="screen"/>

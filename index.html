@@ -116,8 +116,106 @@
         text-align: center;
         margin-right: 8px;
         font-weight: var(--mdc-typography-button-font-weight, 500);
-        font-size: var(--mdc-typography-button-font-size, 0.875rem);
+        font-size: var(--mdc-typography-button-font-size, 1.2rem);
         color: #fff
+            /* position: relative; */
+    }
+
+    .joint-status-box {
+        width: 100%;
+        margin-bottom: 15px;
+        height: 36px;
+
+        height: var(--mdc-protected-button-container-height, 36px);
+        display: flex;
+        justify-content: center;
+        /* background-color: #484853; */
+        /* margin-left: 10px; */
+        border-radius: var(--mdc-shape-small, 4px);
+        vertical-align: middle;
+        align-items: center;
+        /* display: inline-block; */
+    }
+
+
+    .joint-status-box-top {
+        width: 100%;
+        margin-bottom: 15px;
+        padding-top: 15px;
+        height: 21px;
+
+        height: var(--mdc-protected-button-container-height, 36px);
+        display: flex;
+        justify-content: center;
+        background-color: #484853;
+        /* margin-left: 10px; */
+        border-radius: var(--mdc-shape-small, 4px);
+        vertical-align: middle;
+        align-items: center;
+        /* display: inline-block; */
+    }
+
+
+    .tocabi-joint-safety-status {
+        /* text-align: center; */
+        margin-right: 8px;
+        width: 40%;
+        background-color: #5eff00;
+        display: flex;
+        height: 100%;
+
+        /* height: 36px; */
+        font-weight: var(--mdc-typography-button-font-weight, 500);
+        font-size: var(--mdc-typography-button-font-size, 0.875rem);
+        border-radius: var(--mdc-shape-small, 4px);
+
+        /* vertical-align: middle; */
+        align-items: center;
+        justify-content: center;
+
+        color: #fff
+            /* position: relative; */
+    }
+
+    .tocabi-joint-zp-status {
+        /* text-align: center; */
+        margin-right: 8px;
+        width: 40%;
+        background-color: #484853;
+        display: flex;
+        height: 100%;
+
+        /* height: 36px; */
+        font-weight: var(--mdc-typography-button-font-weight, 500);
+        font-size: var(--mdc-typography-button-font-size, 0.875rem);
+        border-radius: var(--mdc-shape-small, 4px);
+
+        /* vertical-align: middle; */
+        align-items: center;
+        justify-content: center;
+
+        color: #fff
+            /* position: relative; */
+    }
+
+    .tocabi-joint-ecat-status {
+        /* text-align: center; */
+        margin-right: 8px;
+        width: 20%;
+        background-color: #dcf30c;
+        display: flex;
+        height: 100%;
+
+        /* height: 36px; */
+        font-weight: var(--mdc-typography-button-font-weight, 500);
+        font-size: var(--mdc-typography-button-font-size, 0.875rem);
+        border-radius: var(--mdc-shape-small, 4px);
+
+        /* vertical-align: middle; */
+        align-items: center;
+        justify-content: center;
+
+        color: rgb(0, 0, 0)
             /* position: relative; */
     }
 
@@ -368,6 +466,11 @@
                     <span class="mdc-button__ripple"></span>
                     <span class="mdc-button__label">E STOP</span>
                 </button>
+                <button class="mdc-button mdc-button--raised top-button tocabi-app-bar-button emergency-button"
+                    onclick="tocabi_commander('positioncontrol')">
+                    <span class="mdc-button__ripple"></span>
+                    <span class="mdc-button__label">S STOP</span>
+                </button>
             </section>
 
             <!-- <section class="mdc-top-app-bar__section mdc-top-app-bar__section--align-end" role="toolbar">
@@ -481,9 +584,24 @@
                             <span class="mdc-button__label">Safety Disable</span>
                         </button>
                         <button class="mdc-button mdc-button--raised top-button ecat-button"
+                            onclick="tocabi_commander('locklower');">
+                            <span class="mdc-button__ripple"></span>
+                            <span class="mdc-button__label">Lower Lock</span>
+                        </button>
+                        <button class="mdc-button mdc-button--raised top-button ecat-button"
+                            onclick="tocabi_commander('disablelower');">
+                            <span class="mdc-button__ripple"></span>
+                            <span class="mdc-button__label">Lower Disable</span>
+                        </button>
+                        <button class="mdc-button mdc-button--raised top-button ecat-button"
                             onclick="tocabi_commander('ftcalib');">
                             <span class="mdc-button__ripple"></span>
-                            <span class="mdc-button__label">FT Calibration</span>
+                            <span class="mdc-button__label">FT Calib foot</span>
+                        </button>
+                        <button class="mdc-button mdc-button--raised top-button ecat-button"
+                            onclick="tocabi_commander('handftcalib');">
+                            <span class="mdc-button__ripple"></span>
+                            <span class="mdc-button__label">FT Calib hand</span>
                         </button>
                         <button class="mdc-button mdc-button--raised top-button ecat-button"
                             onclick="tocabi_commander('imureset');">
@@ -497,7 +615,6 @@
                         </button>
 
                     </div>
-                    <div class="mdc-layout-grid__cell--span-2 tocabi_content_text"></div>
                     <!-- <div class="mdc-layout-grid__cell tocabi_content_text"></div> -->
                     <!-- <div class="mdc-layout-grid__cell tocabi_content_text"></div> -->
                     <div class="mdc-layout-grid__cell--span-2 tocabi_content_text">
@@ -511,7 +628,203 @@
                         </button>
                     </div>
 
-                    <div class="mdc-layout-grid__cell--span-2 tocabi_content_text"></div>
+                    <div class="mdc-layout-grid__cell--span-1 tocabi_content_text">
+                        <div class="joint-status-box-top">
+                            Left Leg
+                        </div>
+                        <div class="joint-status-box">
+                            <div class="label tocabi-joint-safety-status"> </div>
+                            <div class="label tocabi-joint-zp-status"> </div>
+                            <div class="label tocabi-joint-ecat-status"> </div>
+                        </div>
+                        <div class="joint-status-box">
+                            <div class="label tocabi-joint-safety-status"> </div>
+                            <div class="label tocabi-joint-zp-status"> </div>
+                            <div class="label tocabi-joint-ecat-status"> </div>
+                        </div>
+                        <div class="joint-status-box">
+                            <div class="label tocabi-joint-safety-status"> </div>
+                            <div class="label tocabi-joint-zp-status"> </div>
+                            <div class="label tocabi-joint-ecat-status"> </div>
+                        </div>
+                        <div class="joint-status-box">
+                            <div class="label tocabi-joint-safety-status"> </div>
+                            <div class="label tocabi-joint-zp-status"> </div>
+                            <div class="label tocabi-joint-ecat-status"> </div>
+                        </div>
+                        <div class="joint-status-box">
+                            <div class="label tocabi-joint-safety-status"> </div>
+                            <div class="label tocabi-joint-zp-status"> </div>
+                            <div class="label tocabi-joint-ecat-status"> </div>
+                        </div>
+                        <div class="joint-status-box">
+                            <div class="label tocabi-joint-safety-status"> </div>
+                            <div class="label tocabi-joint-zp-status"> </div>
+                            <div class="label tocabi-joint-ecat-status"> </div>
+                        </div>
+
+                        <div class="joint-status-box-top">
+                            Waist
+                        </div>
+                        <div class="joint-status-box">
+                            <div class="label tocabi-joint-safety-status"> </div>
+                            <div class="label tocabi-joint-zp-status"> </div>
+                            <div class="label tocabi-joint-ecat-status"> </div>
+                        </div>
+                        <div class="joint-status-box">
+                            <div class="label tocabi-joint-safety-status"> </div>
+                            <div class="label tocabi-joint-zp-status"> </div>
+                            <div class="label tocabi-joint-ecat-status"> </div>
+                        </div>
+                        <div class="joint-status-box">
+                            <div class="label tocabi-joint-safety-status"> </div>
+                            <div class="label tocabi-joint-zp-status"> </div>
+                            <div class="label tocabi-joint-ecat-status"> </div>
+                        </div>
+                    </div>
+
+                    <div class="mdc-layout-grid__cell--span-1 tocabi_content_text">
+                        <div class="joint-status-box-top">
+                            Right Leg
+                        </div>
+                        <div class="joint-status-box">
+                            <div class="label tocabi-joint-safety-status"> </div>
+                            <div class="label tocabi-joint-zp-status"> </div>
+                            <div class="label tocabi-joint-ecat-status"> </div>
+                        </div>
+                        <div class="joint-status-box">
+                            <div class="label tocabi-joint-safety-status"> </div>
+                            <div class="label tocabi-joint-zp-status"> </div>
+                            <div class="label tocabi-joint-ecat-status"> </div>
+                        </div>
+                        <div class="joint-status-box">
+                            <div class="label tocabi-joint-safety-status"> </div>
+                            <div class="label tocabi-joint-zp-status"> </div>
+                            <div class="label tocabi-joint-ecat-status"> </div>
+                        </div>
+                        <div class="joint-status-box">
+                            <div class="label tocabi-joint-safety-status"> </div>
+                            <div class="label tocabi-joint-zp-status"> </div>
+                            <div class="label tocabi-joint-ecat-status"> </div>
+                        </div>
+                        <div class="joint-status-box">
+                            <div class="label tocabi-joint-safety-status"> </div>
+                            <div class="label tocabi-joint-zp-status"> </div>
+                            <div class="label tocabi-joint-ecat-status"> </div>
+                        </div>
+                        <div class="joint-status-box">
+                            <div class="label tocabi-joint-safety-status"> </div>
+                            <div class="label tocabi-joint-zp-status"> </div>
+                            <div class="label tocabi-joint-ecat-status"> </div>
+                        </div>
+                        <div class="joint-status-box">
+                        </div>
+                        <div class="joint-status-box-top">
+                            Head
+                        </div>
+                        <div class="joint-status-box">
+                            <div class="label tocabi-joint-safety-status"> </div>
+                            <div class="label tocabi-joint-zp-status"> </div>
+                            <div class="label tocabi-joint-ecat-status"> </div>
+                        </div>
+                        <div class="joint-status-box">
+                            <div class="label tocabi-joint-safety-status"> </div>
+                            <div class="label tocabi-joint-zp-status"> </div>
+                            <div class="label tocabi-joint-ecat-status"> </div>
+                        </div>
+                    </div>
+
+                    <div class="mdc-layout-grid__cell--span-1 tocabi_content_text">
+                        <div class="joint-status-box-top">
+                            Left Arm
+                        </div>
+                        <div class="joint-status-box">
+                            <div class="label tocabi-joint-safety-status"> </div>
+                            <div class="label tocabi-joint-zp-status"> </div>
+                            <div class="label tocabi-joint-ecat-status"> </div>
+                        </div>
+                        <div class="joint-status-box">
+                            <div class="label tocabi-joint-safety-status"> </div>
+                            <div class="label tocabi-joint-zp-status"> </div>
+                            <div class="label tocabi-joint-ecat-status"> </div>
+                        </div>
+                        <div class="joint-status-box">
+                            <div class="label tocabi-joint-safety-status"> </div>
+                            <div class="label tocabi-joint-zp-status"> </div>
+                            <div class="label tocabi-joint-ecat-status"> </div>
+                        </div>
+                        <div class="joint-status-box">
+                            <div class="label tocabi-joint-safety-status"> </div>
+                            <div class="label tocabi-joint-zp-status"> </div>
+                            <div class="label tocabi-joint-ecat-status"> </div>
+                        </div>
+                        <div class="joint-status-box">
+                            <div class="label tocabi-joint-safety-status"> </div>
+                            <div class="label tocabi-joint-zp-status"> </div>
+                            <div class="label tocabi-joint-ecat-status"> </div>
+                        </div>
+                        <div class="joint-status-box">
+                            <div class="label tocabi-joint-safety-status"> </div>
+                            <div class="label tocabi-joint-zp-status"> </div>
+                            <div class="label tocabi-joint-ecat-status"> </div>
+                        </div>
+                        <div class="joint-status-box">
+                            <div class="label tocabi-joint-safety-status"> </div>
+                            <div class="label tocabi-joint-zp-status"> </div>
+                            <div class="label tocabi-joint-ecat-status"> </div>
+                        </div>
+                        <div class="joint-status-box">
+                            <div class="label tocabi-joint-safety-status"> </div>
+                            <div class="label tocabi-joint-zp-status"> </div>
+                            <div class="label tocabi-joint-ecat-status"> </div>
+                        </div>
+                    </div>
+
+                    <div class="mdc-layout-grid__cell--span-1 tocabi_content_text">
+                        <div class="joint-status-box-top">
+                            Right Arm
+                        </div>
+                        <div class="joint-status-box">
+                            <div class="label tocabi-joint-safety-status"> </div>
+                            <div class="label tocabi-joint-zp-status"> </div>
+                            <div class="label tocabi-joint-ecat-status"> </div>
+                        </div>
+                        <div class="joint-status-box">
+                            <div class="label tocabi-joint-safety-status"> </div>
+                            <div class="label tocabi-joint-zp-status"> </div>
+                            <div class="label tocabi-joint-ecat-status"> </div>
+                        </div>
+                        <div class="joint-status-box">
+                            <div class="label tocabi-joint-safety-status"> </div>
+                            <div class="label tocabi-joint-zp-status"> </div>
+                            <div class="label tocabi-joint-ecat-status"> </div>
+                        </div>
+                        <div class="joint-status-box">
+                            <div class="label tocabi-joint-safety-status"> </div>
+                            <div class="label tocabi-joint-zp-status"> </div>
+                            <div class="label tocabi-joint-ecat-status"> </div>
+                        </div>
+                        <div class="joint-status-box">
+                            <div class="label tocabi-joint-safety-status"> </div>
+                            <div class="label tocabi-joint-zp-status"> </div>
+                            <div class="label tocabi-joint-ecat-status"> </div>
+                        </div>
+                        <div class="joint-status-box">
+                            <div class="label tocabi-joint-safety-status"> </div>
+                            <div class="label tocabi-joint-zp-status"> </div>
+                            <div class="label tocabi-joint-ecat-status"> </div>
+                        </div>
+                        <div class="joint-status-box">
+                            <div class="label tocabi-joint-safety-status"> </div>
+                            <div class="label tocabi-joint-zp-status"> </div>
+                            <div class="label tocabi-joint-ecat-status"> </div>
+                        </div>
+                        <div class="joint-status-box">
+                            <div class="label tocabi-joint-safety-status"> </div>
+                            <div class="label tocabi-joint-zp-status"> </div>
+                            <div class="label tocabi-joint-ecat-status"> </div>
+                        </div>
+                    </div>
                     <!-- <div class="mdc-layout-grid__cell--span-2 tocabi_content_text">
                         <div class="ecat-status-row">
                             <div class="ecat-status-box">
@@ -715,6 +1028,18 @@
                     <div class="mdc-layout-grid__cell tocabi_content_text">First level</div>
                 </div>
             </div>
+            <div class="mdc-layout-grid">
+                <div class="mdc-layout-grid__inner">
+                    <div class="mdc-layout-grid__cell">
+                        <!-- <div calss="mdc-lay" -->
+                    </div>
+                    <div class="mdc-layout-grid__cell">2</div>
+                    <div class="mdc-layout-grid__cell">3</div>
+                    <div class="mdc-layout-grid__cell">4</div>
+                    <div class="mdc-layout-grid__cell">5</div>
+                </div>
+            </div>
+
         </div>
         <div class="content">
             <div class="mdc-layout-grid">
@@ -994,7 +1319,8 @@
                                 <span class="mdc-line-ripple"></span>
                             </div>
 
-                            <div class="mdc-select__menu mdc-menu mdc-menu-surface mdc-menu-surface--fullwidth avatar_mode_select">
+                            <div
+                                class="mdc-select__menu mdc-menu mdc-menu-surface mdc-menu-surface--fullwidth avatar_mode_select">
                                 <ul class="mdc-deprecated-list" role="listbox" aria-label="Food picker listbox">
                                     <li class="mdc-deprecated-list-item mdc-deprecated-list-item--selected"
                                         aria-selected="true" data-value="" role="option">
@@ -1057,30 +1383,36 @@
                                 </ul>
                             </div>
                         </div>
-                        <button class="mdc-button mdc-button--raised top-button command-button" onclick="avatarmode_commander()">
+                        <button class="mdc-button mdc-button--raised top-button command-button"
+                            onclick="avatarmode_commander()">
                             <span class="mdc-button__ripple"></span>
                             <span class="mdc-button__label">Send Mode</span>
                         </button>
 
                         <div style="height:50px"></div>
 
-                        <button class="mdc-button mdc-button--raised top-button command-button" onclick="avatar_commander(1);">
+                        <button class="mdc-button mdc-button--raised top-button command-button"
+                            onclick="avatar_commander(1);">
                             <span class="mdc-button__ripple"></span>
                             <span class="mdc-button__label">Still Pose Calibration</span>
                         </button>
-                        <button class="mdc-button mdc-button--raised top-button command-button" onclick="avatar_commander(2);">
+                        <button class="mdc-button mdc-button--raised top-button command-button"
+                            onclick="avatar_commander(2);">
                             <span class="mdc-button__ripple"></span>
                             <span class="mdc-button__label">T Pose Calibration</span>
                         </button>
-                        <button class="mdc-button mdc-button--raised top-button command-button" onclick="avatar_commander(3);">
+                        <button class="mdc-button mdc-button--raised top-button command-button"
+                            onclick="avatar_commander(3);">
                             <span class="mdc-button__ripple"></span>
                             <span class="mdc-button__label">Forward Calibration</span>
                         </button>
-                        <button class="mdc-button mdc-button--raised top-button command-button" onclick="avatar_commander(4);">
+                        <button class="mdc-button mdc-button--raised top-button command-button"
+                            onclick="avatar_commander(4);">
                             <span class="mdc-button__ripple"></span>
                             <span class="mdc-button__label">Calibration reset</span>
                         </button>
-                        <button class="mdc-button mdc-button--raised top-button command-button" onclick="avatar_commander(5);">
+                        <button class="mdc-button mdc-button--raised top-button command-button"
+                            onclick="avatar_commander(5);">
                             <span class="mdc-button__ripple"></span>
                             <span class="mdc-button__label">Load Saved Calibration</span>
                         </button>
@@ -1266,9 +1598,11 @@
                 jtfd.push(new mdc.textField.MDCTextField(ele));
             });
 
-            jsld[0].root.addEventListener('MDCSlider:input', function () {
-                console.log(1);
-            })
+            jsld.forEach(function (ele, idx) {
+                ele.root.addEventListener('MDCSlider:input', function () {
+                    console.log(ele.getValue(), idx)
+                })
+            });
         });
 
 

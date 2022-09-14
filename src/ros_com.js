@@ -1,5 +1,5 @@
 var ros = new ROSLIB.Ros({
-    url: 'ws://192.168.0.11:9090'
+    url: 'ws://192.168.10.100:9090'
 });
 
 ros.on('connection', function () {
@@ -217,6 +217,7 @@ var com_pub = new ROSLIB.Topic({
     name: '/tocabi/command',
     messageType: 'std_msgs/String'
 });
+
 var start_pub = new ROSLIB.Topic({
     ros: ros,
     name: '/tocabi/starter',
@@ -248,6 +249,8 @@ var jointcom_pub = new ROSLIB.Topic({
 var p_order = [15, 16, 17, 18, 19, 20, 21, 22, 25, 26, 27, 28, 29, 30, 31, 32, 12, 13, 14, 23, 24, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11];
 
 var p_order2 = [21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 16, 17, 18, 0, 1, 2, 3, 4, 5, 6, 7, 19, 20, 8, 9, 10, 11, 12, 13, 14, 15];
+
+var est_order = [0,1,2,3,4,5,9,10,11,12,13,14,6,7,8,17,18,19,20,21,22,23,24,15,16,25,26,27,28,29,30,31,32];
 
 function settoPos0() {
 
@@ -348,6 +351,16 @@ var syslog_sub = new ROSLIB.Topic({
     name: '/tocabi/syslog',
     messageType: 'std_msgs/String'
 });
+var start_sub = new ROSLIB.Topic({
+    ros: ros,
+    name: '/tocabi/starter',
+    messageType: 'std_msgs/String'
+});
+var stop_sub = new ROSLIB.Topic({
+    ros: ros,
+    name: '/tocabi/stopper',
+    messageType: 'std_msgs/String'
+});
 
 syslog_sub.subscribe(function (message) {
     let lbox = document.getElementById('syslog_box');
@@ -425,9 +438,178 @@ var com_status_sub = new ROSLIB.Topic({
 
 });
 
+var ecat_status_sub = new ROSLIB.Topic({
+    ros: ros,
+    name: '/tocabi/ecatstates',
+    messageType: 'std_msgs/Int8MultiArray',
+    throttle_rate: 50,
+    queue_size: 0
+
+});
+
+stop_sub.subscribe(function (message) {
+    console.log('stopper_rcv : ' + message.data)
+});
+
+start_sub.subscribe(function (message) {
+    console.log('starter_rcv : ' + message.data)
+});
+
+ecat_status_sub.subscribe(function (message) {
+    safety = document.querySelectorAll('.tocabi-joint-safety-status')
+    zp = document.querySelectorAll('.tocabi-joint-zp-status')
+    ecat = document.querySelectorAll('.tocabi-joint-ecat-status')
+
+    // console.log(safety.length);
+    // console.log(zp.length);
+    // console.log(ecat.length);
+
+    // console.log('Received message : ' + message.data);
+
+    for (let i = 0; i < ecat.length; i++) {
+
+        zp[est_order[i]].innerText = i;
+
+        num_ecat = message.data[i];
+
+        num_safety = message.data[66+i];
+        
+        num_zp = message.data[33+i];
+
+        if (num_ecat == 0) {
+            ecat[est_order[i]].innerText = "0";
+            ecat[est_order[i]].style.backgroundColor="#FFFF00";
+            ecat[est_order[i]].style.color="#000000";
+        }
+        else if (num_ecat == 1) {
+            ecat[est_order[i]].innerText = "1";
+            ecat[est_order[i]].style.backgroundColor="#5EFF00";
+            ecat[est_order[i]].style.color="#000000";
+        }
+        else if (num_ecat == 2) {
+            ecat[est_order[i]].innerText = "2";
+            ecat[est_order[i]].style.backgroundColor="#FFA500";
+            ecat[est_order[i]].style.color="#FFFFFF";
+        }
+        else if (num_ecat == 3) {
+            ecat[est_order[i]].innerText = "3";
+            ecat[est_order[i]].style.backgroundColor="#FF0000";
+            ecat[est_order[i]].style.color="#000000";
+        }
+        else if (num_ecat == 4) {
+            ecat[est_order[i]].innerText = "4";
+            ecat[est_order[i]].style.backgroundColor="#5EFF00";
+            ecat[est_order[i]].style.color="#000000";
+        }
+
+        if( num_safety == 0)
+        {
+            safety[est_order[i]].innerText="OK";
+            safety[est_order[i]].style.backgroundColor="#5EFF00"; //green
+            safety[est_order[i]].style.color="#000000"; //black
+
+        }
+        else if(num_safety == 1)
+        {
+            safety[est_order[i]].innerText="JL";
+            safety[est_order[i]].style.backgroundColor="#FF0000";
+            safety[est_order[i]].style.color="#ffffff"; //white
+            
+        }
+        else if(num_safety == 2)
+        {
+            safety[est_order[i]].innerText="VL";
+            safety[est_order[i]].style.backgroundColor="#FF0000";
+            safety[est_order[i]].style.color="#ffffff"; 
+            
+        }
+        else if(num_safety == 3)
+        {
+            safety[est_order[i]].innerText="TL";
+            safety[est_order[i]].style.backgroundColor="#FF0000";
+            safety[est_order[i]].style.color="#ffffff"; 
+            
+        }
+        else if(num_safety == 4)
+        {
+            safety[est_order[i]].innerText="CL";
+            safety[est_order[i]].style.backgroundColor="#FF0000";
+            safety[est_order[i]].style.color="#ffffff"; 
+            
+        }
+        else if(num_safety == 6)
+        {
+            safety[est_order[i]].innerText="NT";
+            safety[est_order[i]].style.backgroundColor="#000000";
+            safety[est_order[i]].style.color="#000000";
+            
+        }
+        else if(num_safety == 7)
+        {
+            safety[est_order[i]].innerText="LL";
+            safety[est_order[i]].style.backgroundColor="#F97613"; //orange
+            safety[est_order[i]].style.color="#000000";
+
+            
+        }
+        else if(num_safety == 9)
+        {
+            safety[est_order[i]].innerText="NOS";
+            safety[est_order[i]].style.backgroundColor="#808080";
+            safety[est_order[i]].style.color="#ffffff"; 
+        }
+
+        if(num_zp ==0)
+        {
+            zp[est_order[i]].innerText="zp";
+            zp[est_order[i]].style.backgroundColor="#FFFF00";
+            zp[est_order[i]].style.color="#000000";
+        }
+        else if(num_zp ==1)
+        {
+            zp[est_order[i]].innerText="sc";
+            zp[est_order[i]].style.backgroundColor="#FFFF00";
+            zp[est_order[i]].style.color="#000000";
+            
+        }
+        else if(num_zp ==2)
+        {
+            zp[est_order[i]].innerText="man";
+            zp[est_order[i]].style.backgroundColor="#F97613";
+            zp[est_order[i]].style.color="#000000";
+            
+        }
+        else if(num_zp ==3)
+        {
+            zp[est_order[i]].innerText="length";
+            zp[est_order[i]].style.backgroundColor="#FF0000";
+            zp[est_order[i]].style.color="#FFFFFF";
+            
+        }
+        else if(num_zp ==4)
+        {
+            zp[est_order[i]].innerText="go0";
+            zp[est_order[i]].style.backgroundColor="#FFFF00";
+            zp[est_order[i]].style.color="#000000";
+            
+        }
+        else if(num_zp ==5)
+        {
+            
+            zp[est_order[i]].innerText="ok";
+            zp[est_order[i]].style.backgroundColor="#5EFF00";
+            zp[est_order[i]].style.color="#000000";
+        }
+
+    }
+
+
+});
+
 com_status_sub.subscribe(function (message) {
 
-    comsf = document.querySelectorAll('#comstatus')
+    // console.log("hello")
+    comsf = document.querySelectorAll('#ecat-status-val')
 
     comsf[0].innerText = message.data[0].toFixed(3);
     comsf[1].innerText = message.data[1].toFixed(3);
