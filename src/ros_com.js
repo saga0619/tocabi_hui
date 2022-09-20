@@ -1,7 +1,10 @@
 console.log("loading roscom");
 
+connect_url = 'ws://192.168.10.100:9090'
+
+
 var ros = new ROSLIB.Ros({
-    url: 'ws://192.168.20.28:9090'
+    url: connect_url
 });
 
 ros.on('connection', function () {
@@ -33,7 +36,7 @@ ros.on('close', function () {
 
 
     ros_status.innerText = 'change_history';
-    ros_status.style.color = "#FF0000"; //yellow
+    ros_status.style.color = "#ffff00"; //yellow
 
 });
 
@@ -342,137 +345,163 @@ function sleep(ms) {
 }
 
 
-
-var intervalId = window.setInterval(function(){
-
-    ros.getNodes(function(nodes){
-        // console.log(nodes);
-        node_boxes = document.querySelectorAll('.tocabi-launch-status');
-
-        tocabi_launch_exist = false;
-        tocabi_controller_exist = false;
-        mobile_launch_exist = false;
-        mobile_controller_exist = false;
-        hand_launch_exist = false;
-        hand_controller_exist = false;
-
-        for (let i=0; i<nodes.length;i++)
-        {
-
-            if(nodes[i] == "/mobile_launch_manager")
-            {
-                // console.log("mobile launch exist");
-                mobile_launch_exist = true;
+var check_time = 0;
 
 
-            }
-            else if(nodes[i] == "/tocabi_launch_manager")
-            {
-                // console.log("tocabi_ launch exist");
-                tocabi_launch_exist = true;
+function check_node_exist()
+{
+    check_time = check_time + 1;
 
-            }
-            else if(nodes[i] == "/tocabi_controller")
-            {
-                tocabi_controller_exist = true;
-            }
-            else if(nodes[i] == "/tm_listener")
-            {
-                mobile_controller_exist = true;
-            }            
-            else if(nodes[i] == "/hand_launch_manager")
-            {
-                hand_launch_exist = true;
-            }            
-            else if(nodes[i] == "/right_hand")
-            {
-                hand_controller_exist = true;
-            }
-
-        }
+    let lbox = document.getElementById('syslog_box');
+    let tline = document.createTextNode(check_time);
+    lbox.appendChild(tline);
+    var vr = document.createElement("br");
+    lbox.appendChild(vr);
+    lbox.scrollTop = lbox.scrollHeight;
 
 
-        if(tocabi_launch_exist)
-        {
-            node_boxes[0].innerText = "Online";
-            node_boxes[0].style.backgroundColor = "#5EFF00";
-        }
-        else{
-            node_boxes[0].innerText = "Offline";
-            node_boxes[0].style.backgroundColor = "#ff0000";
-        }
-
-        if(tocabi_controller_exist)
-        {
-            node_boxes[1].innerText = "Online";
-            node_boxes[1].style.backgroundColor = "#5EFF00";
-        }
-        else{
-            node_boxes[1].innerText = "Offline";
-            node_boxes[1].style.backgroundColor = "#ff0000";
-        }
-
-
-        if(mobile_launch_exist)
-        {
-            node_boxes[4].innerText = "Online";
-            node_boxes[4].style.backgroundColor = "#5EFF00";
-        }
-        else{
-            node_boxes[4].innerText = "Offline";
-            node_boxes[4].style.backgroundColor = "#ff0000";
-        }
-
-
-        if(mobile_controller_exist)
-        {
-            node_boxes[5].innerText = "Online";
-            node_boxes[5].style.backgroundColor = "#5EFF00";
-        }
-        else{
-            node_boxes[5].innerText = "Offline";
-            node_boxes[5].style.backgroundColor = "#ff0000";
-        }
-
-
-        if(hand_launch_exist)
-        {
-            node_boxes[2].innerText = "Online";
-            node_boxes[2].style.backgroundColor = "#5EFF00";
-        }
-        else{
-            node_boxes[2].innerText = "Offline";
-            node_boxes[2].style.backgroundColor = "#ff0000";
-        }
-
-
-        if(hand_controller_exist)
-        {
-            node_boxes[3].innerText = "Online";
-            node_boxes[3].style.backgroundColor = "#5EFF00";
-        }
-        else{
-            node_boxes[3].innerText = "Offline";
-            node_boxes[3].style.backgroundColor = "#ff0000";
-        }
-
-    })
-
-},1000)
-
-
-async function check_node_exist(){
-
-    while(true)
+    if (ros.isConnected)
     {
-        sleep(1000);
-        // console.log("1");
 
         ros.getNodes(function(nodes){
             console.log(nodes);
+            node_boxes = document.querySelectorAll('.tocabi-launch-status');
+    
+            tocabi_launch_exist = false;
+            tocabi_controller_exist = false;
+            mobile_launch_exist = false;
+            mobile_controller_exist = false;
+            hand_launch_exist = false;
+            hand_controller_exist = false;
+    
+            for (let i=0; i<nodes.length;i++)
+            {
+    
+                if(nodes[i] == "/mobile_launch_manager")
+                {
+                    // console.log("mobile launch exist");
+                    mobile_launch_exist = true;
+    
+    
+                }
+                else if(nodes[i] == "/tocabi_launch_manager")
+                {
+                    // console.log("tocabi_ launch exist");
+                    tocabi_launch_exist = true;
+    
+                }
+                else if(nodes[i] == "/tocabi_controller")
+                {
+                    tocabi_controller_exist = true;
+                }
+                else if(nodes[i] == "/tm_listener")
+                {
+                    mobile_controller_exist = true;
+                }            
+                else if(nodes[i] == "/hand_launch_manager")
+                {
+                    hand_launch_exist = true;
+                }            
+                else if(nodes[i] == "/right_hand")
+                {
+                    hand_controller_exist = true;
+                }
+    
+            }
+    
+    
+            if(tocabi_launch_exist)
+            {
+                node_boxes[0].innerText = "Online";
+                node_boxes[0].style.backgroundColor = "#5EFF00";
+            }
+            else{
+                node_boxes[0].innerText = "Offline";
+                node_boxes[0].style.backgroundColor = "#ff0000";
+            }
+    
+            if(tocabi_controller_exist)
+            {
+                node_boxes[1].innerText = "Online";
+                node_boxes[1].style.backgroundColor = "#5EFF00";
+            }
+            else{
+                node_boxes[1].innerText = "Offline";
+                node_boxes[1].style.backgroundColor = "#ff0000";
+            }
+    
+    
+            if(mobile_launch_exist)
+            {
+                node_boxes[4].innerText = "Online";
+                node_boxes[4].style.backgroundColor = "#5EFF00";
+            }
+            else{
+                node_boxes[4].innerText = "Offline";
+                node_boxes[4].style.backgroundColor = "#ff0000";
+            }
+    
+    
+            if(mobile_controller_exist)
+            {
+                node_boxes[5].innerText = "Online";
+                node_boxes[5].style.backgroundColor = "#5EFF00";
+            }
+            else{
+                node_boxes[5].innerText = "Offline";
+                node_boxes[5].style.backgroundColor = "#ff0000";
+            }
+    
+    
+            if(hand_launch_exist)
+            {
+                node_boxes[2].innerText = "Online";
+                node_boxes[2].style.backgroundColor = "#5EFF00";
+            }
+            else{
+                node_boxes[2].innerText = "Offline";
+                node_boxes[2].style.backgroundColor = "#ff0000";
+            }
+    
+    
+            if(hand_controller_exist)
+            {
+                node_boxes[3].innerText = "Online";
+                node_boxes[3].style.backgroundColor = "#5EFF00";
+            }
+            else{
+                node_boxes[3].innerText = "Offline";
+                node_boxes[3].style.backgroundColor = "#ff0000";
+            }
+    
         })
     }
+    else{
+        console.log("not connect")
+        ros.connect(connect_url)
+    }
+
+
 }
+
+
+// var intervalId = window.setInterval(function(){
+//     check_node_exist();
+// },1000)
+
+
+// async function check_node_exist(){
+
+//     while(true)
+//     {
+//         sleep(1000);
+//         // console.log("1");
+
+//         ros.getNodes(function(nodes){
+//             console.log(nodes);
+//         })
+//     }
+// }
 
 
 function positionCommand() {
