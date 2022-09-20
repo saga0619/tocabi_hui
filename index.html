@@ -13,13 +13,29 @@
     <script src="src/material-components-web.min.js"></script>
     <script type="text/javascript" src="src/eventemitter2.js"></script>
     <script type="text/javascript" src="src/roslib.min.js"></script>
+
+    <script type="text/javascript" src="src/joy.js"></script>
+
+    <!-- <script type="text/javascript" src="src/createjs.min.js"></script> -->
+    <!-- <script type="text/javascript" src="src/hammer.min.js"></script> -->
     <!-- <script src="src/ros_com.js"></script> -->
     <link href="src/material-components-web.min.css" rel="stylesheet">
+
     <link href="src/roboto.css" rel="stylesheet">
+
+    <!-- <script src="src/joystick.js"></script> -->
+    <!-- <link href="src/joystick.css" rel="stylesheet"> -->
     <!-- import the Material stylesheet -->
     <script>
 
     </script>
+
+    <script src="src/ros_com.js" async>
+    // console.log("entered...")
+    // check_node_exist()
+    </script>
+
+
 </head>
 
 <style>
@@ -141,7 +157,8 @@
     .joint-status-box-top {
         width: 100%;
         margin-bottom: 15px;
-        padding-top: 15px;
+        padding-top: 4px;
+        padding-bottom: 4px;
         height: 21px;
 
         height: var(--mdc-protected-button-container-height, 36px);
@@ -153,6 +170,10 @@
         vertical-align: middle;
         align-items: center;
         /* display: inline-block; */
+
+
+        font-weight: var(--mdc-typography-button-font-weight, 500);
+        font-size: var(--mdc-typography-button-font-size, 1.2rem);
     }
 
 
@@ -166,7 +187,7 @@
 
         /* height: 36px; */
         font-weight: var(--mdc-typography-button-font-weight, 500);
-        font-size: var(--mdc-typography-button-font-size, 0.875rem);
+        font-size: var(--mdc-typography-button-font-size, 1.2rem);
         border-radius: var(--mdc-shape-small, 4px);
 
         /* vertical-align: middle; */
@@ -187,7 +208,7 @@
 
         /* height: 36px; */
         font-weight: var(--mdc-typography-button-font-weight, 500);
-        font-size: var(--mdc-typography-button-font-size, 0.875rem);
+        font-size: var(--mdc-typography-button-font-size, 1.2rem);
         border-radius: var(--mdc-shape-small, 4px);
 
         /* vertical-align: middle; */
@@ -208,7 +229,7 @@
 
         /* height: 36px; */
         font-weight: var(--mdc-typography-button-font-weight, 500);
-        font-size: var(--mdc-typography-button-font-size, 0.875rem);
+        font-size: var(--mdc-typography-button-font-size, 1.2rem);
         border-radius: var(--mdc-shape-small, 4px);
 
         /* vertical-align: middle; */
@@ -218,6 +239,30 @@
         color: rgb(0, 0, 0)
             /* position: relative; */
     }
+
+    .tocabi-launch-status {
+        /* text-align: center; */
+        margin-right: 5px;
+        margin-left: 5px;
+        width: 50%;
+        background-color: #dcf30c;
+        display: flex;
+        height: 100%;
+
+        /* height: 36px; */
+        font-weight: var(--mdc-typography-button-font-weight, 500);
+        font-size: var(--mdc-typography-button-font-size, 1.2rem);
+        border-radius: var(--mdc-shape-small, 4px);
+
+        /* vertical-align: middle; */
+        align-items: center;
+        justify-content: center;
+
+        color: rgb(0, 0, 0)
+            /* position: relative; */
+    }
+
+
 
     .tocabi_time {
         font-size: 1.125rem;
@@ -286,6 +331,7 @@
         width: 100%;
         /* width: 200px; */
         margin-bottom: 15px;
+        margin-right: 8px;
         --mdc-theme-primary: #b00020;
         --mdc-theme-on-primary: #fff;
     }
@@ -362,6 +408,23 @@
         color: #fff;
     }
 
+    .row {
+        display: inline-flex;
+        clear: both;
+    }
+
+    .columnLateral {
+        float: left;
+        width: 20%;
+        min-width: 300px;
+    }
+
+    .columnCetral {
+        float: left;
+        width: 60%;
+        min-width: 300px;
+    }
+
     /* .mdc-top-app-bar {
         background-color: var(--mdc-theme-light);
     } */
@@ -381,7 +444,10 @@
     } */
 </style>
 
+<!-- <body class="mdc-typography" style="margin: 0px;overflow-x:hidden; overflow-y:hidden;position:fixed"> -->
+
 <body class="mdc-typography" style="margin: 0px;">
+
     <header class="mdc-top-app-bar">
         <div class="mdc-top-app-bar__row">
             <section class="mdc-top-app-bar__section mdc-top-app-bar__section--align-start">
@@ -431,6 +497,7 @@
         </div>
         <div class="mdc-top-app-bar__row">
             <section class="mdc-top-app-bar__section mdc-top-app-bar__section--align-end" role="toolbar">
+
                 <div class="system-status-box">
                     <div class="label tocabi-status">SE </div>
                     <span class="material-icons se_status status-icons">clear</span>
@@ -454,6 +521,11 @@
                 <div class="system-status-box">
                     <div class="label tocabi-status">E2 </div>
                     <span class="material-icons e2_status status-icons">clear</span>
+                </div>
+
+                <div class="system-status-box">
+                    <div class="label tocabi-status">ROS </div>
+                    <span class="material-icons ros_status status-icons">clear</span>
                 </div>
 
                 <button class="mdc-button mdc-button--raised top-button tocabi-app-bar-button emergency-button"
@@ -620,12 +692,52 @@
                     <div class="mdc-layout-grid__cell--span-2 tocabi_content_text">
                         <button class="mdc-button mdc-button--raised top-button ecat-system-button" id="dialog-start">
                             <span class="mdc-button__ripple"></span>
-                            <span class="mdc-button__label">System START</span>
+                            <span class="mdc-button__label">Tocabi START</span>
                         </button>
                         <button class="mdc-button mdc-button--raised top-button ecat-system-button" id="dialog-end">
                             <span class="mdc-button__ripple"></span>
-                            <span class="mdc-button__label">System END</span>
+                            <span class="mdc-button__label">Tocabi END</span>
                         </button>
+                        <button class="mdc-button mdc-button--raised top-button ecat-system-button" id="dialog-restart">
+                            <span class="mdc-button__ripple"></span>
+                            <span class="mdc-button__label">Bridge Restart</span>
+                        </button>
+
+                        <div class="joint-status-box">
+                            <div class="label tocabi-launch-status"> </div>
+                            <div class="label tocabi-launch-status"> </div>
+                        </div>
+                        <div class="joint-status-box"></div>
+
+                        <button class="mdc-button mdc-button--raised top-button ecat-system-button" id="mdialog-start">
+                            <span class="mdc-button__ripple"></span>
+                            <span class="mdc-button__label">Mobile START</span>
+                        </button>
+                        <button class="mdc-button mdc-button--raised top-button ecat-system-button" id="mdialog-end">
+                            <span class="mdc-button__ripple"></span>
+                            <span class="mdc-button__label">Mobile END</span>
+                        </button>
+                        <div class="joint-status-box">
+                            <div class="label tocabi-launch-status"> </div>
+                            <div class="label tocabi-launch-status"> </div>
+                        </div>
+                        <div class="joint-status-box"></div>
+
+                        <button class="mdc-button mdc-button--raised top-button ecat-system-button" id="hdialog-start">
+                            <span class="mdc-button__ripple"></span>
+                            <span class="mdc-button__label">Hand START</span>
+                        </button>
+                        <button class="mdc-button mdc-button--raised top-button ecat-system-button" id="hdialog-end">
+                            <span class="mdc-button__ripple"></span>
+                            <span class="mdc-button__label">Hand END</span>
+                        </button>
+                        <div class="joint-status-box">
+                            <div class="label tocabi-launch-status"> </div>
+                            <div class="label tocabi-launch-status"> </div>
+                        </div>
+
+
+
                     </div>
 
                     <div class="mdc-layout-grid__cell--span-1 tocabi_content_text">
@@ -1013,14 +1125,68 @@
 
 
 
+
         </div>
         <div class="content">
             <p class="tocabi_content_text">Content two</p>
+            <div class="row">
+
+                <div class="columnLateral">
+                    <div id="joy1Div" style="width:200px;height:200px;margin:50px"></div>
+                    Posizione X:<input id="joy1PosizioneX" type="text" /><br />
+                    Posizione Y:<input id="joy1PosizioneY" type="text" /><br />
+                    Direzione:<input id="joy1Direzione" type="text" /><br />
+                    X :<input id="joy1X" type="text" /></br>
+                    Y :<input id="joy1Y" type="text" />
+                </div>
+
+                <div class="columnCetral">
+                    <div class="currentMode">
+                        N
+                    </div>
+
+                    <button class="mdc-button mdc-button--raised top-button tocabi-app-bar-button" id="mode-button"
+                        onclick="mobileModeCommand(1)">
+                        <span class="mdc-button__ripple"></span>
+                        <span class="mdc-button__label">Mobile Mode D</span>
+
+                    </button>
+                    <button class="mdc-button mdc-button--raised top-button tocabi-app-bar-button" id="mode-button"
+                        onclick="mobileModeCommand(0)">
+                        <span class="mdc-button__ripple"></span>
+                        <span class="mdc-button__label">Mobile Mode N</span>
+
+                    </button>
+                    <button class="mdc-button mdc-button--raised top-button tocabi-app-bar-button" id="mode-button"
+                        onclick="mobileModeCommand(-1)">
+                        <span class="mdc-button__ripple"></span>
+                        <span class="mdc-button__label">Mobile Mode R</span>
+
+                    </button>
+
+
+                </div>
+
+                <div class="columnLateral">
+                    <div id="joy2Div" style="width:200px;height:200px;margin:50px"></div>
+                    Posizione X:<input id="joy2PosizioneX" type="text" /><br />
+                    Posizione Y:<input id="joy2PosizioneY" type="text" /><br />
+                    Direzione:<input id="joy2Direzione" type="text" /><br />
+                    X :<input id="joy2X" type="text" /></br>
+                    Y :<input id="joy2Y" type="text" />
+                </div>
+            </div>
+
+
+
+
             <div class="mdc-layout-grid">
                 <div class="mdc-layout-grid__inner">
                     <div class="mdc-layout-grid__cell">
                         <div class="mdc-layout-grid__inner">
                             <div class="mdc-layout-grid__cell tocabi_content_text"><span>Second level</span></div>
+
+
                             <div class="mdc-layout-grid__cell tocabi_content_text"><span>Second level</span></div>
                         </div>
                     </div>
@@ -1037,6 +1203,16 @@
                     <div class="mdc-layout-grid__cell">3</div>
                     <div class="mdc-layout-grid__cell">4</div>
                     <div class="mdc-layout-grid__cell">5</div>
+                    <!-- <body class="noselect" onload="init_joystick();">
+                        <div class="container space-top">
+                          <h1 class="center blue-text thin">Canvas Joystick</h1>
+                          <div class="center-align">
+                            <canvas id="joystick" height="300" width="300"></canvas>
+                          </div>
+                          <p id="xVal" class="light">X: </p>
+                          <p id="yVal" class="light">Y: </p>
+                        </div>
+                      </body> -->
                 </div>
             </div>
 
@@ -1229,12 +1405,12 @@
 
                         <div style="height: 40px;"></div>
                         <button class="mdc-button mdc-button--raised top-button command-button"
-                            onclick="task_command12()">
+                            onclick="taskCommand12()">
                             <span class="mdc-button__ripple"></span>
                             <span class="mdc-button__label">CMD : MODE 12</span>
                         </button>
                         <button class="mdc-button mdc-button--raised top-button command-button"
-                            onclick="task_command13()">
+                            onclick="taskCommand13()">
                             <span class="mdc-button__ripple"></span>
                             <span class="mdc-button__label">CMD : MODE 13</span>
                         </button>
@@ -1295,7 +1471,53 @@
             <div class="mdc-layout-grid">
                 <div class="mdc-layout-grid__inner">
                     <div class="mdc-layout-grid__cell--span-2 tocabi_content_text">
+                        <button class="mdc-button mdc-button--raised top-button command-button"
+                            onclick="avatarmode_commander_btn(1)">
+                            <span class="mdc-button__ripple"></span>
+                            <span class="mdc-button__label">1. Init Pose</span>
+                        </button>
+                        <button class="mdc-button mdc-button--raised top-button command-button"
+                            onclick="avatarmode_commander_btn(2)">
+                            <span class="mdc-button__ripple"></span>
+                            <span class="mdc-button__label">2. Zero Pose </span>
+                        </button>
+                        <button class="mdc-button mdc-button--raised top-button command-button"
+                            onclick="avatarmode_commander_btn(3)">
+                            <span class="mdc-button__ripple"></span>
+                            <span class="mdc-button__label">3. Freeze</span>
+                        </button>
+                        <button class="mdc-button mdc-button--raised top-button command-button"
+                            onclick="avatarmode_commander_btn(4)">
+                            <span class="mdc-button__ripple"></span>
+                            <span class="mdc-button__label">4. Ready Pose</span>
+                        </button>
+                        <button class="mdc-button mdc-button--raised top-button command-button"
+                            onclick="avatarmode_commander_btn(5)">
+                            <span class="mdc-button__ripple"></span>
+                            <span class="mdc-button__label">5. Head Only Ret</span>
+                        </button>
+                        <button class="mdc-button mdc-button--raised top-button command-button"
+                            onclick="avatarmode_commander_btn(6)">
+                            <span class="mdc-button__ripple"></span>
+                            <span class="mdc-button__label">6. HQPIK 1</span>
+                        </button>
+                        <button class="mdc-button mdc-button--raised top-button command-button"
+                            onclick="avatarmode_commander_btn(7)">
+                            <span class="mdc-button__ripple"></span>
+                            <span class="mdc-button__label">7. HQPIK 2</span>
+                        </button>
+                        <button class="mdc-button mdc-button--raised top-button command-button"
+                            onclick="avatarmode_commander_btn(8)">
+                            <span class="mdc-button__ripple"></span>
+                            <span class="mdc-button__label">8. ABS HQPIK 1</span>
+                        </button>
+                        <button class="mdc-button mdc-button--raised top-button command-button"
+                            onclick="avatarmode_commander_btn(9)">
+                            <span class="mdc-button__ripple"></span>
+                            <span class="mdc-button__label">9. Pro HQPIK 1</span>
+                        </button>
                     </div>
+                    <div class="mdc-layout-grid__cell--span-2 tocabi_content_text"></div>
                     <div class="mdc-layout-grid__cell--span-2 tocabi_content_text">
                         <div class="mdc-select mdc-select--filled demo-width-class avatar-select">
                             <div class="mdc-select__anchor" role="button" aria-haspopup="listbox" aria-expanded="false"
@@ -1505,12 +1727,129 @@
         <div class="mdc-dialog__scrim"></div>
     </div>
 
+    <div class="mdc-dialog">
+        <div class="mdc-dialog__container">
+            <div class="mdc-dialog__surface" role="alertdialog" aria-modal="true" aria-labelledby="my-dialog-title"
+                aria-describedby="my-dialog-content">
+                <div class="mdc-dialog__content" id="my-dialog-content">
+                    Restart Bridge
+                </div>
+                <div class="mdc-dialog__actions">
+                    <button type="button" class="mdc-button mdc-dialog__button" id="confirm-restart-tocabi"
+                        data-mdc-dialog-action="cancel" onclick="tocabi_restarter();">
+                        <div class="mdc-button__ripple"></div>
+                        <span class="mdc-button__label">Confirm</span>
+                    </button>
+                    <button type="button" class="mdc-button mdc-dialog__button" data-mdc-dialog-action="discard">
+                        <div class="mdc-button__ripple"></div>
+                        <span class="mdc-button__label">Discard</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="mdc-dialog__scrim"></div>
+    </div>
+
+
+
+    <div class="mdc-dialog">
+        <div class="mdc-dialog__container">
+            <div class="mdc-dialog__surface" role="alertdialog" aria-modal="true" aria-labelledby="my-dialog-title"
+                aria-describedby="my-dialog-content">
+                <div class="mdc-dialog__content" id="my-dialog-content">
+                    Start Mobile?
+                </div>
+                <div class="mdc-dialog__actions">
+                    <button type="button" class="mdc-button mdc-dialog__button" id="confirm-start-mobile"
+                        ata-mdc-dialog-action="cancel" onclick="mobile_starter();">
+                        <div class="mdc-button__ripple"></div>
+                        <span class="mdc-button__label">Confirm</span>
+                    </button>
+                    <button type="button" class="mdc-button mdc-dialog__button" data-mdc-dialog-action="discard">
+                        <div class="mdc-button__ripple"></div>
+                        <span class="mdc-button__label">Discard</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="mdc-dialog__scrim"></div>
+    </div>
+
+    <div class="mdc-dialog">
+        <div class="mdc-dialog__container">
+            <div class="mdc-dialog__surface" role="alertdialog" aria-modal="true" aria-labelledby="my-dialog-title"
+                aria-describedby="my-dialog-content">
+                <div class="mdc-dialog__content" id="my-dialog-content">
+                    Terminate Mobile
+                </div>
+                <div class="mdc-dialog__actions">
+                    <button type="button" class="mdc-button mdc-dialog__button" id="confirm-end-mobile"
+                        data-mdc-dialog-action="cancel" onclick="mobile_stopper();">
+                        <div class="mdc-button__ripple"></div>
+                        <span class="mdc-button__label">Confirm</span>
+                    </button>
+                    <button type="button" class="mdc-button mdc-dialog__button" data-mdc-dialog-action="discard">
+                        <div class="mdc-button__ripple"></div>
+                        <span class="mdc-button__label">Discard</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="mdc-dialog__scrim"></div>
+    </div>
+
+
+    <div class="mdc-dialog">
+        <div class="mdc-dialog__container">
+            <div class="mdc-dialog__surface" role="alertdialog" aria-modal="true" aria-labelledby="my-dialog-title"
+                aria-describedby="my-dialog-content">
+                <div class="mdc-dialog__content" id="my-dialog-content">
+                    Start Mobile?
+                </div>
+                <div class="mdc-dialog__actions">
+                    <button type="button" class="mdc-button mdc-dialog__button" id="confirm-start-hand"
+                        ata-mdc-dialog-action="cancel" onclick="hand_starter();">
+                        <div class="mdc-button__ripple"></div>
+                        <span class="mdc-button__label">Confirm</span>
+                    </button>
+                    <button type="button" class="mdc-button mdc-dialog__button" data-mdc-dialog-action="discard">
+                        <div class="mdc-button__ripple"></div>
+                        <span class="mdc-button__label">Discard</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="mdc-dialog__scrim"></div>
+    </div>
+
+    <div class="mdc-dialog">
+        <div class="mdc-dialog__container">
+            <div class="mdc-dialog__surface" role="alertdialog" aria-modal="true" aria-labelledby="my-dialog-title"
+                aria-describedby="my-dialog-content">
+                <div class="mdc-dialog__content" id="my-dialog-content">
+                    Terminate Mobile
+                </div>
+                <div class="mdc-dialog__actions">
+                    <button type="button" class="mdc-button mdc-dialog__button" id="confirm-end-hand"
+                        data-mdc-dialog-action="cancel" onclick="hand_stopper();">
+                        <div class="mdc-button__ripple"></div>
+                        <span class="mdc-button__label">Confirm</span>
+                    </button>
+                    <button type="button" class="mdc-button mdc-dialog__button" data-mdc-dialog-action="discard">
+                        <div class="mdc-button__ripple"></div>
+                        <span class="mdc-button__label">Discard</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="mdc-dialog__scrim"></div>
+    </div>
 
 
 
     <!-- import the Material javascript file -->
-    <script src="src/ros_com.js" async></script> -->
-    <script>
+
+    <script async>
         var dialogEls = Array.from(document.querySelectorAll('.mdc-dialog'));
         const dialog_start = new mdc.dialog.MDCDialog(dialogEls[0]);
         document.querySelector('#dialog-start').addEventListener('click', function (evt) {
@@ -1526,6 +1865,13 @@
             dialog_end.open();
         })
 
+        const dialog_res = new mdc.dialog.MDCDialog(dialogEls[2]);
+        document.querySelector('#dialog-restart').addEventListener('click', function (evt) {
+            event.preventDefault(evt);
+            dialog_res.lastFocusedTarget = evt.target;
+            dialog_res.open();
+        })
+
         document.querySelector('#confirm-start-tocabi').addEventListener('click', function (evt) {
             // event.preventDefault(evt);
             console.log('start tocabi event');
@@ -1538,7 +1884,98 @@
             dialog_end.close();
         })
 
+        document.querySelector('#confirm-restart-tocabi').addEventListener('click', function (evt) {
+            // event.preventDefault(evt);
+            console.log('restart bridge event');
+            dialog_end.close();
+        })
+
+        const dialog_start2 = new mdc.dialog.MDCDialog(dialogEls[3]);
+        document.querySelector('#mdialog-start').addEventListener('click', function (evt) {
+            event.preventDefault(evt);
+            dialog_start2.lastFocusedTarget = evt.target;
+            dialog_start2.open();
+        })
+
+        const dialog_end2 = new mdc.dialog.MDCDialog(dialogEls[4]);
+        document.querySelector('#mdialog-end').addEventListener('click', function (evt) {
+            event.preventDefault(evt);
+            dialog_end2.lastFocusedTarget = evt.target;
+            dialog_end2.open();
+        })
+
+        document.querySelector('#confirm-start-mobile').addEventListener('click', function (evt) {
+            // event.preventDefault(evt);
+            console.log('start mobile event');
+            dialog_start2.close();
+        })
+
+        document.querySelector('#confirm-end-mobile').addEventListener('click', function (evt) {
+            // event.preventDefault(evt);
+            console.log('end mobile event');
+            dialog_end2.close();
+        })
+
+
+        const dialog_start3 = new mdc.dialog.MDCDialog(dialogEls[5]);
+        document.querySelector('#hdialog-start').addEventListener('click', function (evt) {
+            event.preventDefault(evt);
+            dialog_start3.lastFocusedTarget = evt.target;
+            dialog_start3.open();
+        })
+
+        const dialog_end3 = new mdc.dialog.MDCDialog(dialogEls[6]);
+        document.querySelector('#hdialog-end').addEventListener('click', function (evt) {
+            event.preventDefault(evt);
+            dialog_end3.lastFocusedTarget = evt.target;
+            dialog_end3.open();
+        })
+
+        document.querySelector('#confirm-start-hand').addEventListener('click', function (evt) {
+            // event.preventDefault(evt);
+            console.log('start hand event');
+            dialog_start3.close();
+        })
+
+        document.querySelector('#confirm-end-hand').addEventListener('click', function (evt) {
+            // event.preventDefault(evt);
+            console.log('end hand event');
+            dialog_end3.close();
+        })
+
+        var joy1IinputPosX = document.getElementById("joy1PosizioneX");
+        var joy1InputPosY = document.getElementById("joy1PosizioneY");
+        var joy1Direzione = document.getElementById("joy1Direzione");
+        var joy1X = document.getElementById("joy1X");
+        var joy1Y = document.getElementById("joy1Y");
+
+        var joy2IinputPosX = document.getElementById("joy2PosizioneX");
+        var joy2InputPosY = document.getElementById("joy2PosizioneY");
+        var joy2Direzione = document.getElementById("joy2Direzione");
+        var joy2X = document.getElementById("joy2X");
+        var joy2Y = document.getElementById("joy2Y");
+
+
+        /*
+        setInterval(function(){ joy1IinputPosX.value=Joy1.GetPosX(); }, 50);
+        setInterval(function(){ joy1InputPosY.value=Joy1.GetPosY(); }, 50);
+        setInterval(function(){ joy1Direzione.value=Joy1.GetDir(); }, 50);
+        setInterval(function(){ joy1X.value=Joy1.GetX(); }, 50);
+        setInterval(function(){ joy1Y.value=Joy1.GetY(); }, 50);
+        */
+        // Create JoyStick object into the DIV 'joy1Div'
+
+
+
+
+
+
+
         var tabBar = new mdc.tabBar.MDCTabBar(document.querySelector('.mdc-tab-bar'));
+
+        var init_joy = false;
+
+
 
         var contentEls = document.querySelectorAll('.content');
         tabBar.listen('MDCTabBar:activated', function (event) {
@@ -1551,6 +1988,36 @@
                 jsld.forEach(function (ele) {
                     ele.layout();
                 })
+            }
+
+            if (event.detail.index == 1) {
+
+                if (init_joy == false) {
+                    console.log("status selected")
+
+                    var Joy1 = new JoyStick('joy1Div', {}, function (stickData) {
+                        joy1IinputPosX.value = stickData.xPosition;
+                        joy1InputPosY.value = stickData.yPosition;
+                        joy1Direzione.value = stickData.cardinalDirection;
+                        joy1X.value = stickData.x;
+                        joy1Y.value = stickData.y;
+
+                        mobileCommand(joy1Y.value / 100, joy1X.value / 100, joy2X.value / 100);
+                    });
+
+                    var Joy2 = new JoyStick('joy2Div', {}, function (stickData) {
+                        joy2IinputPosX.value = stickData.xPosition;
+                        joy2InputPosY.value = stickData.yPosition;
+                        joy2Direzione.value = stickData.cardinalDirection;
+                        joy2X.value = stickData.x;
+                        joy2Y.value = stickData.y;
+                    });
+
+                    init_joy = true;
+
+                }
+
+
             }
         });
 
@@ -1652,6 +2119,8 @@
         // })
 
     </script>
+
+
 </body>
 
 </html>

@@ -1,17 +1,40 @@
+console.log("loading roscom");
+
 var ros = new ROSLIB.Ros({
     url: 'ws://192.168.10.100:9090'
 });
 
 ros.on('connection', function () {
     console.log('Connected to websocket server.');
+
+
+    var ros_status = document.querySelector('.ros_status');
+
+    ros_status.innerText = 'done';
+    ros_status.style.color =  "#5EFF00";     
+
 });
 
 ros.on('error', function (error) {
-    console.log('Error connecting to websocket server: ', error);
+    console.log('error websocket server.');
+
+    var ros_status = document.querySelector('.ros_status');
+
+    ros_status.innerText = 'clear';
+    ros_status.style.color =  "#ff0000"; 
+
 });
 
 ros.on('close', function () {
-    console.log('Connection to websocket server closed.');
+    console.log('closed to websocket server.');
+
+    var ros_status = document.querySelector('.ros_status');
+
+
+
+    ros_status.innerText = 'change_history';
+    ros_status.style.color = "#FF0000"; //yellow
+
 });
 
 // Publishing a Topic
@@ -35,6 +58,48 @@ var taskCommander = new ROSLIB.Topic({
     name: '/tocabi/taskcommand',
     messageType: 'tocabi_msgs/TaskCommand'
 });
+
+
+
+var mobileCommander = new ROSLIB.Topic({
+    ros: ros,
+    name: '/joy',
+    messageType: 'sensor_msgs/Joy'
+})
+
+function mobileCommand(joy_x, joy_y, joy_z)
+{
+    console.log(joy_x, joy_y, joy_z);
+}
+
+function mobileModeCommand(mode)
+{
+    modec = document.querySelector('.currentMode');
+
+    if(mode == 0)
+    {
+        modec.innerText = "N";
+    }
+    else if(mode == 1)
+    {
+        modec.innerText = "D";
+    }
+    else if(mode == -1)
+    {
+        modec.innerText = "R";
+    }
+    
+    console.log(mode);
+
+
+}
+
+var mobileModeCommander = new ROSLIB.Topic({
+    ros: ros,
+    name: '/drive_mode',
+    messageType: 'std_msgs/Int16'
+})
+
 
 function taskCommand12() {
     var tc_ = new ROSLIB.Message({
@@ -218,16 +283,9 @@ var com_pub = new ROSLIB.Topic({
     messageType: 'std_msgs/String'
 });
 
-var start_pub = new ROSLIB.Topic({
-    ros: ros,
-    name: '/tocabi/starter',
-    messageType: 'std_msgs/String'
-});
-var stop_pub = new ROSLIB.Topic({
-    ros: ros,
-    name: '/tocabi/stopper',
-    messageType: 'std_msgs/String'
-});
+
+
+
 var avatarcommand_pub = new ROSLIB.Topic({
     ros: ros,
     name: '/tocabi/avatar/pose_calibration_flag',
@@ -265,6 +323,143 @@ function settoPos0() {
 
     for (let i = 0; i < jtfd.length; i++) {
         jtfd[i].value = pos1[p_order[i]];
+    }
+}
+function sleep(ms) {
+    const wakeUpTime = Date.now() + ms;
+    while (Date.now() < wakeUpTime) {}
+}
+
+
+
+var intervalId = window.setInterval(function(){
+
+    ros.getNodes(function(nodes){
+        // console.log(nodes);
+        node_boxes = document.querySelectorAll('.tocabi-launch-status');
+
+        tocabi_launch_exist = false;
+        tocabi_controller_exist = false;
+        mobile_launch_exist = false;
+        mobile_controller_exist = false;
+        hand_launch_exist = false;
+        hand_controller_exist = false;
+
+        for (let i=0; i<nodes.length;i++)
+        {
+
+            if(nodes[i] == "/mobile_launch_manager")
+            {
+                // console.log("mobile launch exist");
+                mobile_launch_exist = true;
+
+
+            }
+            else if(nodes[i] == "/tocabi_launch_manager")
+            {
+                // console.log("tocabi_ launch exist");
+                tocabi_launch_exist = true;
+
+            }
+            else if(nodes[i] == "/tocabi_controller")
+            {
+                tocabi_controller_exist = true;
+            }
+            else if(nodes[i] == "/tm_listener")
+            {
+                mobile_controller_exist = true;
+            }            
+            else if(nodes[i] == "/hand_launch_manager")
+            {
+                hand_launch_exist = true;
+            }            
+            else if(nodes[i] == "/right_hand")
+            {
+                hand_controller_exist = true;
+            }
+
+        }
+
+
+        if(tocabi_launch_exist)
+        {
+            node_boxes[0].innerText = "Loaded";
+            node_boxes[0].style.backgroundColor = "#5EFF00";
+        }
+        else{
+            node_boxes[0].innerText = "Not Loaded";
+            node_boxes[0].style.backgroundColor = "#ff0000";
+        }
+
+        if(tocabi_controller_exist)
+        {
+            node_boxes[1].innerText = "Loaded";
+            node_boxes[1].style.backgroundColor = "#5EFF00";
+        }
+        else{
+            node_boxes[1].innerText = "Not Loaded";
+            node_boxes[1].style.backgroundColor = "#ff0000";
+        }
+
+
+        if(mobile_launch_exist)
+        {
+            node_boxes[2].innerText = "Loaded";
+            node_boxes[2].style.backgroundColor = "#5EFF00";
+        }
+        else{
+            node_boxes[2].innerText = "Not Loaded";
+            node_boxes[2].style.backgroundColor = "#ff0000";
+        }
+
+
+        if(mobile_controller_exist)
+        {
+            node_boxes[3].innerText = "Loaded";
+            node_boxes[3].style.backgroundColor = "#5EFF00";
+        }
+        else{
+            node_boxes[3].innerText = "Not Loaded";
+            node_boxes[3].style.backgroundColor = "#ff0000";
+        }
+
+
+        if(hand_launch_exist)
+        {
+            node_boxes[4].innerText = "Loaded";
+            node_boxes[4].style.backgroundColor = "#5EFF00";
+        }
+        else{
+            node_boxes[4].innerText = "Not Loaded";
+            node_boxes[4].style.backgroundColor = "#ff0000";
+        }
+
+
+        if(hand_controller_exist)
+        {
+            node_boxes[5].innerText = "Loaded";
+            node_boxes[5].style.backgroundColor = "#5EFF00";
+        }
+        else{
+            node_boxes[5].innerText = "Not Loaded";
+            node_boxes[5].style.backgroundColor = "#ff0000";
+        }
+
+    })
+
+},1000)
+
+
+async function check_node_exist(){
+
+    while(true)
+    {
+        sleep(1000);
+        // console.log("1");
+
+        ros.getNodes(function(nodes){
+            console.log(nodes);
+        })
     }
 }
 
@@ -320,6 +515,12 @@ function avatar_commander(avatar_mode) {
     })
     avatarcommand_pub.publish(av_msg);
 }
+function avatarmode_commander_btn(mode) {
+    var av_msg = new ROSLIB.Message({
+        data: parseInt(mode)
+    })
+    avatarmode_pub.publish(av_msg);
+}
 
 function avatarmode_commander() {
     var av_msg = new ROSLIB.Message({
@@ -328,9 +529,27 @@ function avatarmode_commander() {
     avatarmode_pub.publish(av_msg);
 }
 
+var start_pub = new ROSLIB.Topic({
+    ros: ros,
+    name: '/tocabi/starter',
+    messageType: 'std_msgs/String'
+});
+var stop_pub = new ROSLIB.Topic({
+    ros: ros,
+    name: '/tocabi/stopper',
+    messageType: 'std_msgs/String'
+});
+
 function tocabi_starter() {
     var com_str = new ROSLIB.Message({
         data: "start_tocabi"
+    });
+    start_pub.publish(com_str);
+}
+
+function tocabi_restarter() {
+    var com_str = new ROSLIB.Message({
+        data: "restart_websocket"
     });
     start_pub.publish(com_str);
 }
@@ -342,6 +561,55 @@ function tocabi_stopper() {
     stop_pub.publish(com_str);
 }
 
+
+var start_pub2 = new ROSLIB.Topic({
+    ros: ros,
+    name: '/tocabi_mobile/starter',
+    messageType: 'std_msgs/String'
+});
+var stop_pub2 = new ROSLIB.Topic({
+    ros: ros,
+    name: '/tocabi_mobile/stopper',
+    messageType: 'std_msgs/String'
+});
+function mobile_starter() {
+    var com_str = new ROSLIB.Message({
+        data: "start_mobile"
+    });
+    start_pub2.publish(com_str);
+}
+function mobile_stopper() {
+    var com_str = new ROSLIB.Message({
+        data: "stop_mobile"
+    });
+    stop_pub2.publish(com_str);
+}
+
+
+var start_pub3 = new ROSLIB.Topic({
+    ros: ros,
+    name: '/tocabi_vision/starter',
+    messageType: 'std_msgs/String'
+});
+var stop_pub3 = new ROSLIB.Topic({
+    ros: ros,
+    name: '/tocabi_vision/stopper',
+    messageType: 'std_msgs/String'
+});
+function hand_starter() {
+    var com_str = new ROSLIB.Message({
+        data: "start"
+    });
+    start_pub3.publish(com_str);
+}
+function hand_stopper() {
+    var com_str = new ROSLIB.Message({
+        data: "stop"
+    });
+    stop_pub3.publish(com_str);
+}
+
+
 var p1_progress = 0.0;
 
 // Subscribing to a Topic
@@ -351,16 +619,18 @@ var syslog_sub = new ROSLIB.Topic({
     name: '/tocabi/syslog',
     messageType: 'std_msgs/String'
 });
-var start_sub = new ROSLIB.Topic({
-    ros: ros,
-    name: '/tocabi/starter',
-    messageType: 'std_msgs/String'
-});
-var stop_sub = new ROSLIB.Topic({
-    ros: ros,
-    name: '/tocabi/stopper',
-    messageType: 'std_msgs/String'
-});
+
+
+// var start_sub = new ROSLIB.Topic({
+//     ros: ros,
+//     name: '/tocabi/starter',
+//     messageType: 'std_msgs/String'
+// });
+// var stop_sub = new ROSLIB.Topic({
+//     ros: ros,
+//     name: '/tocabi/stopper',
+//     messageType: 'std_msgs/String'
+// });
 
 syslog_sub.subscribe(function (message) {
     let lbox = document.getElementById('syslog_box');
@@ -385,32 +655,62 @@ sysstatate_sub.subscribe(function (message) {
     message.data[4]; //se
     message.data[5]; //tc
 
+    var ses = document.querySelector('.se_status');
     var e1 = document.querySelector('.e1_status');
     var e2 = document.querySelector('.e2_status');
+    var tcs = document.querySelector('.tc_status');
 
     //refresh done clear change_history
 
     if (message.data[1] == 0) {
         e1.innerText = 'clear';
+        e1.style.color = "#FF0000"; //red
     }
     else if (message.data[1] == 1) {
         e1.innerText = 'change_history';
+        e1.style.color = "#dcf30c"; //yellow
 
     }
     else if (message.data[1] == 2) {
         e1.innerText = 'done';
+        e1.style.color = "#5EFF00"; //green
     }
 
 
     if (message.data[3] == 0) {
         e2.innerText = 'clear';
+        e2.style.color = "#FF0000"; //green
     }
     else if (message.data[3] == 1) {
         e2.innerText = 'change_history';
+        e2.style.color = "#dcf30c"; //green
 
     }
     else if (message.data[3] == 2) {
         e2.innerText = 'done';
+        e2.style.color = "#5EFF00"; //green
+    }
+
+    if (message.data[4] == 1)
+    {
+        ses.innerText = 'done';
+        ses.style.color = "#5EFF00"; //green
+    }
+    else if(message.data[4] == 0)
+    {
+        ses.innerText = 'clear';
+        ses.style.color = "#FF0000"; //red
+    }
+
+    if(message.data[5] == 0)
+    {
+        tcs.innerText = 'done';
+        tcs.style.color = "#5EFF00";
+    }
+    else if(message.data[5] == 1)
+    {
+        tcs.innerText = 'clear';
+        tcs.style.color = "#FF0000";
     }
 
 
@@ -447,13 +747,13 @@ var ecat_status_sub = new ROSLIB.Topic({
 
 });
 
-stop_sub.subscribe(function (message) {
-    console.log('stopper_rcv : ' + message.data)
-});
+// stop_sub.subscribe(function (message) {
+//     console.log('stopper_rcv : ' + message.data)
+// });
 
-start_sub.subscribe(function (message) {
-    console.log('starter_rcv : ' + message.data)
-});
+// start_sub.subscribe(function (message) {
+//     console.log('starter_rcv : ' + message.data)
+// });
 
 ecat_status_sub.subscribe(function (message) {
     safety = document.querySelectorAll('.tocabi-joint-safety-status')
@@ -541,7 +841,7 @@ ecat_status_sub.subscribe(function (message) {
         {
             safety[est_order[i]].innerText="NT";
             safety[est_order[i]].style.backgroundColor="#000000";
-            safety[est_order[i]].style.color="#000000";
+            safety[est_order[i]].style.color="#ffffff";
             
         }
         else if(num_safety == 7)
@@ -646,3 +946,10 @@ var listener = new ROSLIB.Topic({
 listener.subscribe(function (message) {
     console.log('Received message on ' + listener.name + ': ' + message.data);
 });
+
+
+console.log("loading roscom complete");
+
+
+
+// check_node_exist()
