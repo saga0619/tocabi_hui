@@ -23,7 +23,7 @@
  * 
  * The MIT License (MIT)
  *
- *  This file is part of the JoyStick Project (https://github.com/bobboteck/JoyStick).
+ *  This file is part of the JoyStick Project (b).
  *	Copyright (c) 2015 Roberto D'Amico (Bobboteck).
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -51,7 +51,10 @@
      yPosition: 0,
      x: 0,
      y: 0,
-     cardinalDirection: "C"
+     cardinalDirection: "C",
+
+     raw_x: 0,
+     raw_y: 0
  };
  
  /**
@@ -83,7 +86,7 @@
          externalStrokeColor = (typeof parameters.externalStrokeColor ===  "undefined" ? "#008000" : parameters.externalStrokeColor),
          autoReturnToCenter = (typeof parameters.autoReturnToCenter === "undefined" ? true : parameters.autoReturnToCenter);
  
-     callback = callback || function(StickStatus) {};
+     callback = callback || function() {};
  
      // Create Canvas element and add it in the Container object
      var objContainer = document.getElementById(container);
@@ -102,7 +105,7 @@
  
      var pressed = 0; // Bool - 1=Yes - 0=No
      var circumference = 2 * Math.PI;
-     var internalRadius = 1+(canvas.width-((canvas.width/2)+0))/2;
+     var internalRadius = (canvas.width-((canvas.width/2)+10))/2;
      var maxMoveStick = internalRadius + 5;
      var externalRadius = internalRadius + 30;
      var centerX = canvas.width / 2;
@@ -114,6 +117,9 @@
      // Used to save current position of stick
      var movedX=centerX;
      var movedY=centerY;
+
+     var last_pos_x = undefined;
+     var last_pos_y = undefined;
  
      // Check if the device support the touch or not
      if("ontouchstart" in document.documentElement)
@@ -182,10 +188,16 @@
  
      function onTouchMove(event)
      {
+        //Direction Based Position Update.. By j
+
          if(pressed === 1 && event.targetTouches[0].target === canvas)
          {
              movedX = event.targetTouches[0].pageX;
              movedY = event.targetTouches[0].pageY;
+
+             last_pos_x = movedX;
+             last_pos_y = movedY;
+
              // Manage offset
              if(canvas.offsetParent.tagName.toUpperCase() === "BODY")
              {
@@ -197,6 +209,22 @@
                  movedX -= canvas.offsetParent.offsetLeft;
                  movedY -= canvas.offsetParent.offsetTop;
              }
+
+             rel_x = movedX - centerX;
+             rel_y = movedY - centerY;
+
+             var length_to = Math.sqrt(rel_x * rel_x + rel_y* rel_y);
+
+             if( length_to.toFixed() > maxMoveStick)
+             {
+                rel_x = rel_x / length_to * maxMoveStick;
+                rel_y = rel_y / length_to * maxMoveStick;
+             }
+
+
+             movedX = centerX + rel_x;
+             movedY = centerY + rel_y;
+
              // Delete canvas
              context.clearRect(0, 0, canvas.width, canvas.height);
              // Redraw object
@@ -215,6 +243,16 @@
  
      function onTouchEnd(event) 
      {
+        if (!last_pos_x ||
+            !last_pos_y ||
+            (event.changedTouches.length > 0 &&
+                (event.changedTouches[0].pageX - last_pos_x > 10 ||
+                    event.changedTouches[0].pageY - last_pos_y > 10)))
+            return
+
+        last_pos_x = undefined
+        last_pos_y = undefined
+
          pressed = 0;
          // If required reset position store variable
          if(autoReturnToCenter)
@@ -235,6 +273,8 @@
          StickStatus.y = ((100*((movedY - centerY)/maxMoveStick))*-1).toFixed();
          StickStatus.cardinalDirection = getCardinalDirection();
          callback(StickStatus);
+
+        //  console.log("touchEnd event!")
      }
  
      /**

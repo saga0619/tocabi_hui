@@ -316,6 +316,13 @@
         margin-top: 0px;
     }
 
+    .tocabi-mode-button {
+        width: 140px;
+        margin-left: 10px;
+        margin-top: 20px;
+    }
+
+
     .command-button {
         width: 100%;
         margin-bottom: 15px;
@@ -422,7 +429,7 @@
     .columnCetral {
         float: left;
         width: 60%;
-        min-width: 300px;
+        min-width: 150px;
     }
 
     /* .mdc-top-app-bar {
@@ -567,7 +574,7 @@
                                 </button>
                                 <button class="mdc-tab mdc-tab" role="tab" aria-selected="true" tabindex="0">
                                     <span class="mdc-tab__content">
-                                        <span class="mdc-tab__text-label">STATUS</span>
+                                        <span class="mdc-tab__text-label">MOBILE</span>
                                     </span>
                                     <span class="mdc-tab-indicator mdc-tab-indicator">
                                         <span
@@ -709,19 +716,6 @@
                         </div>
                         <div class="joint-status-box"></div>
 
-                        <button class="mdc-button mdc-button--raised top-button ecat-system-button" id="mdialog-start">
-                            <span class="mdc-button__ripple"></span>
-                            <span class="mdc-button__label">Mobile START</span>
-                        </button>
-                        <button class="mdc-button mdc-button--raised top-button ecat-system-button" id="mdialog-end">
-                            <span class="mdc-button__ripple"></span>
-                            <span class="mdc-button__label">Mobile END</span>
-                        </button>
-                        <div class="joint-status-box">
-                            <div class="label tocabi-launch-status"> </div>
-                            <div class="label tocabi-launch-status"> </div>
-                        </div>
-                        <div class="joint-status-box"></div>
 
                         <button class="mdc-button mdc-button--raised top-button ecat-system-button" id="hdialog-start">
                             <span class="mdc-button__ripple"></span>
@@ -735,6 +729,22 @@
                             <div class="label tocabi-launch-status"> </div>
                             <div class="label tocabi-launch-status"> </div>
                         </div>
+
+                        <div class="joint-status-box"></div>
+
+                        <button class="mdc-button mdc-button--raised top-button ecat-system-button" id="mdialog-start">
+                            <span class="mdc-button__ripple"></span>
+                            <span class="mdc-button__label">Mobile START</span>
+                        </button>
+                        <button class="mdc-button mdc-button--raised top-button ecat-system-button" id="mdialog-end">
+                            <span class="mdc-button__ripple"></span>
+                            <span class="mdc-button__label">Mobile END</span>
+                        </button>
+                        <div class="joint-status-box">
+                            <div class="label tocabi-launch-status"> </div>
+                            <div class="label tocabi-launch-status"> </div>
+                        </div>
+
 
 
 
@@ -1133,34 +1143,34 @@
 
                 <div class="columnLateral">
                     <div id="joy1Div" style="width:200px;height:200px;margin:50px"></div>
-                    Posizione X:<input id="joy1PosizioneX" type="text" /><br />
+                    <!-- Posizione X:<input id="joy1PosizioneX" type="text" /><br />
                     Posizione Y:<input id="joy1PosizioneY" type="text" /><br />
-                    Direzione:<input id="joy1Direzione" type="text" /><br />
-                    X :<input id="joy1X" type="text" /></br>
-                    Y :<input id="joy1Y" type="text" />
+                    Direzione:<input id="joy1Direzione" type="text" /><br /> -->
+                    X :<input id="joy1X" type="text" value="0"/></br>
+                    Y :<input id="joy1Y" type="text" value="0"/>
                 </div>
 
                 <div class="columnCetral">
-                    <div class="currentMode">
+                    <div class="currentMode" style="width: 100px;font-size: 20pt;">
                         N
                     </div>
 
-                    <button class="mdc-button mdc-button--raised top-button tocabi-app-bar-button" id="mode-button"
+                    <button class="mdc-button mdc-button--raised top-button tocabi-mode-button" id="mode-button"
                         onclick="mobileModeCommand(1)">
                         <span class="mdc-button__ripple"></span>
-                        <span class="mdc-button__label">Mobile Mode D</span>
+                        <span class="mdc-button__label"> Mode D </span>
 
                     </button>
-                    <button class="mdc-button mdc-button--raised top-button tocabi-app-bar-button" id="mode-button"
+                    <button class="mdc-button mdc-button--raised top-button tocabi-mode-button" id="mode-button"
                         onclick="mobileModeCommand(0)">
                         <span class="mdc-button__ripple"></span>
-                        <span class="mdc-button__label">Mobile Mode N</span>
+                        <span class="mdc-button__label"> Mode N</span>
 
                     </button>
-                    <button class="mdc-button mdc-button--raised top-button tocabi-app-bar-button" id="mode-button"
+                    <button class="mdc-button mdc-button--raised top-button tocabi-mode-button" id="mode-button"
                         onclick="mobileModeCommand(-1)">
                         <span class="mdc-button__ripple"></span>
-                        <span class="mdc-button__label">Mobile Mode R</span>
+                        <span class="mdc-button__label"> Mode R</span>
 
                     </button>
 
@@ -1169,18 +1179,18 @@
 
                 <div class="columnLateral">
                     <div id="joy2Div" style="width:200px;height:200px;margin:50px"></div>
-                    Posizione X:<input id="joy2PosizioneX" type="text" /><br />
+                    <!-- Posizione X:<input id="joy2PosizioneX" type="text" /><br />
                     Posizione Y:<input id="joy2PosizioneY" type="text" /><br />
-                    Direzione:<input id="joy2Direzione" type="text" /><br />
-                    X :<input id="joy2X" type="text" /></br>
-                    Y :<input id="joy2Y" type="text" />
+                    Direzione:<input id="joy2Direzione" type="text" /><br /> -->
+                    X :<input id="joy2X" type="text" value="0"/></br>
+                    Y :<input id="joy2Y" type="text" value="0"/>
                 </div>
             </div>
 
 
 
 
-            <div class="mdc-layout-grid">
+            <!-- <div class="mdc-layout-grid">
                 <div class="mdc-layout-grid__inner">
                     <div class="mdc-layout-grid__cell">
                         <div class="mdc-layout-grid__inner">
@@ -1193,28 +1203,18 @@
                     <div class="mdc-layout-grid__cell tocabi_content_text">First level</div>
                     <div class="mdc-layout-grid__cell tocabi_content_text">First level</div>
                 </div>
-            </div>
-            <div class="mdc-layout-grid">
+            </div> -->
+            <!-- <div class="mdc-layout-grid">
                 <div class="mdc-layout-grid__inner">
                     <div class="mdc-layout-grid__cell">
-                        <!-- <div calss="mdc-lay" -->
                     </div>
                     <div class="mdc-layout-grid__cell">2</div>
                     <div class="mdc-layout-grid__cell">3</div>
                     <div class="mdc-layout-grid__cell">4</div>
                     <div class="mdc-layout-grid__cell">5</div>
-                    <!-- <body class="noselect" onload="init_joystick();">
-                        <div class="container space-top">
-                          <h1 class="center blue-text thin">Canvas Joystick</h1>
-                          <div class="center-align">
-                            <canvas id="joystick" height="300" width="300"></canvas>
-                          </div>
-                          <p id="xVal" class="light">X: </p>
-                          <p id="yVal" class="light">Y: </p>
-                        </div>
-                      </body> -->
+
                 </div>
-            </div>
+            </div> -->
 
         </div>
         <div class="content">
@@ -1943,15 +1943,15 @@
             dialog_end3.close();
         })
 
-        var joy1IinputPosX = document.getElementById("joy1PosizioneX");
-        var joy1InputPosY = document.getElementById("joy1PosizioneY");
-        var joy1Direzione = document.getElementById("joy1Direzione");
+        // var joy1IinputPosX = document.getElementById("joy1PosizioneX");
+        // var joy1InputPosY = document.getElementById("joy1PosizioneY");
+        // var joy1Direzione = document.getElementById("joy1Direzione");
         var joy1X = document.getElementById("joy1X");
         var joy1Y = document.getElementById("joy1Y");
 
-        var joy2IinputPosX = document.getElementById("joy2PosizioneX");
-        var joy2InputPosY = document.getElementById("joy2PosizioneY");
-        var joy2Direzione = document.getElementById("joy2Direzione");
+        // var joy2IinputPosX = document.getElementById("joy2PosizioneX");
+        // var joy2InputPosY = document.getElementById("joy2PosizioneY");
+        // var joy2Direzione = document.getElementById("joy2Direzione");
         var joy2X = document.getElementById("joy2X");
         var joy2Y = document.getElementById("joy2Y");
 
@@ -1995,22 +1995,25 @@
                 if (init_joy == false) {
                     console.log("status selected")
 
-                    var Joy1 = new JoyStick('joy1Div', {}, function (stickData) {
-                        joy1IinputPosX.value = stickData.xPosition;
-                        joy1InputPosY.value = stickData.yPosition;
-                        joy1Direzione.value = stickData.cardinalDirection;
-                        joy1X.value = stickData.x;
-                        joy1Y.value = stickData.y;
+                    var Joy1 = new JoyStick('joy1Div', {}, function (stickData1) {
+                        // joy1IinputPosX.value = stickData1.raw_x;
+                        // joy1InputPosY.value = stickData1.raw_y;
+                        // joy1Direzione.value = stickData1.cardinalDirection;
+                        joy1X.value = stickData1.x;
+                        joy1Y.value = stickData1.y;
 
                         mobileCommand(joy1Y.value / 100, joy1X.value / 100, joy2X.value / 100);
                     });
 
-                    var Joy2 = new JoyStick('joy2Div', {}, function (stickData) {
-                        joy2IinputPosX.value = stickData.xPosition;
-                        joy2InputPosY.value = stickData.yPosition;
-                        joy2Direzione.value = stickData.cardinalDirection;
-                        joy2X.value = stickData.x;
-                        joy2Y.value = stickData.y;
+                    var Joy2 = new JoyStick('joy2Div', {}, function (stickData2) {
+                        // joy2IinputPosX.value = stickData2.xPosition;
+                        // joy2InputPosY.value = stickData2.yPosition;
+                        // joy2Direzione.value = stickData2.cardinalDirection;
+                        joy2X.value = stickData2.x;
+                        joy2Y.value = stickData2.y;
+
+                        mobileCommand(joy1Y.value / 100, joy1X.value / 100, joy2X.value / 100);
+
                     });
 
                     init_joy = true;

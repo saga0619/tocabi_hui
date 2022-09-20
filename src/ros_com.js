@@ -1,7 +1,7 @@
 console.log("loading roscom");
 
 var ros = new ROSLIB.Ros({
-    url: 'ws://192.168.10.100:9090'
+    url: 'ws://192.168.20.28:9090'
 });
 
 ros.on('connection', function () {
@@ -70,7 +70,19 @@ var mobileCommander = new ROSLIB.Topic({
 function mobileCommand(joy_x, joy_y, joy_z)
 {
     console.log(joy_x, joy_y, joy_z);
+    var m_cmd = new ROSLIB.Message({
+        axes: [joy_x, joy_y, joy_z],
+        buttons: [],
+    });
+    mobileCommander.publish(m_cmd);
+    
 }
+
+var mobileModeCommander = new ROSLIB.Topic({
+    ros: ros,
+    name: '/drive_mode',
+    messageType: 'std_msgs/Int16'
+})
 
 function mobileModeCommand(mode)
 {
@@ -91,14 +103,13 @@ function mobileModeCommand(mode)
     
     console.log(mode);
 
+    var mm_ = new ROSLIB.Message({
+        data: mode
+    })
 
+    mobileModeCommander.publish(mm_);
 }
 
-var mobileModeCommander = new ROSLIB.Topic({
-    ros: ros,
-    name: '/drive_mode',
-    messageType: 'std_msgs/Int16'
-})
 
 
 function taskCommand12() {
@@ -383,66 +394,66 @@ var intervalId = window.setInterval(function(){
 
         if(tocabi_launch_exist)
         {
-            node_boxes[0].innerText = "Loaded";
+            node_boxes[0].innerText = "Online";
             node_boxes[0].style.backgroundColor = "#5EFF00";
         }
         else{
-            node_boxes[0].innerText = "Not Loaded";
+            node_boxes[0].innerText = "Offline";
             node_boxes[0].style.backgroundColor = "#ff0000";
         }
 
         if(tocabi_controller_exist)
         {
-            node_boxes[1].innerText = "Loaded";
+            node_boxes[1].innerText = "Online";
             node_boxes[1].style.backgroundColor = "#5EFF00";
         }
         else{
-            node_boxes[1].innerText = "Not Loaded";
+            node_boxes[1].innerText = "Offline";
             node_boxes[1].style.backgroundColor = "#ff0000";
         }
 
 
         if(mobile_launch_exist)
         {
-            node_boxes[2].innerText = "Loaded";
-            node_boxes[2].style.backgroundColor = "#5EFF00";
+            node_boxes[4].innerText = "Online";
+            node_boxes[4].style.backgroundColor = "#5EFF00";
         }
         else{
-            node_boxes[2].innerText = "Not Loaded";
-            node_boxes[2].style.backgroundColor = "#ff0000";
+            node_boxes[4].innerText = "Offline";
+            node_boxes[4].style.backgroundColor = "#ff0000";
         }
 
 
         if(mobile_controller_exist)
         {
-            node_boxes[3].innerText = "Loaded";
-            node_boxes[3].style.backgroundColor = "#5EFF00";
+            node_boxes[5].innerText = "Online";
+            node_boxes[5].style.backgroundColor = "#5EFF00";
         }
         else{
-            node_boxes[3].innerText = "Not Loaded";
-            node_boxes[3].style.backgroundColor = "#ff0000";
+            node_boxes[5].innerText = "Offline";
+            node_boxes[5].style.backgroundColor = "#ff0000";
         }
 
 
         if(hand_launch_exist)
         {
-            node_boxes[4].innerText = "Loaded";
-            node_boxes[4].style.backgroundColor = "#5EFF00";
+            node_boxes[2].innerText = "Online";
+            node_boxes[2].style.backgroundColor = "#5EFF00";
         }
         else{
-            node_boxes[4].innerText = "Not Loaded";
-            node_boxes[4].style.backgroundColor = "#ff0000";
+            node_boxes[2].innerText = "Offline";
+            node_boxes[2].style.backgroundColor = "#ff0000";
         }
 
 
         if(hand_controller_exist)
         {
-            node_boxes[5].innerText = "Loaded";
-            node_boxes[5].style.backgroundColor = "#5EFF00";
+            node_boxes[3].innerText = "Online";
+            node_boxes[3].style.backgroundColor = "#5EFF00";
         }
         else{
-            node_boxes[5].innerText = "Not Loaded";
-            node_boxes[5].style.backgroundColor = "#ff0000";
+            node_boxes[3].innerText = "Offline";
+            node_boxes[3].style.backgroundColor = "#ff0000";
         }
 
     })
