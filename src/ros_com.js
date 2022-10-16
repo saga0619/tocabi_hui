@@ -66,7 +66,7 @@ var taskCommander = new ROSLIB.Topic({
 
 var mobileCommander = new ROSLIB.Topic({
     ros: ros,
-    name: '/joy',
+    name: '/joy_gui',
     messageType: 'sensor_msgs/Joy'
 })
 
@@ -87,29 +87,34 @@ var mobileModeCommander = new ROSLIB.Topic({
     messageType: 'std_msgs/Int16'
 })
 
+var drive_mode = false;
+
 function mobileModeCommand(mode)
 {
-    modec = document.querySelector('.currentMode');
+    modec = document.querySelector('.mobile-mode-display');
 
-    if(mode == 0)
+    commmand_mode = 0;
+
+    if(drive_mode)
     {
-        modec.innerText = "N";
+        drive_mode = false;
+        commmand_mode = 2;
+
+        modec.innerText="OFF";
     }
-    else if(mode == 1)
+    else
     {
-        modec.innerText = "D";
+        drive_mode = true;
+        commmand_mode = 3;
+        modec.innerText="ON";
     }
-    else if(mode == -1)
-    {
-        modec.innerText = "R";
-    }
-    
+
     console.log(mode);
 
-    var mm_ = new ROSLIB.Message({
-        data: mode
-    })
 
+    var mm_ = new ROSLIB.Message({
+        data: commmand_mode
+    })
     mobileModeCommander.publish(mm_);
 }
 
@@ -287,8 +292,31 @@ function taskCommand() {
 }
 
 
+var hand_r_pub = new ROSLIB.Topic({
+    ros: ros,
+    name: '/hand/r/states',
+    messageType: 'std_msgs/Int32'
+});
 
+var hand_l_pub = new ROSLIB.Topic({
+    ros: ros,
+    name: '/hand/l/states',
+    messageType: 'std_msgs/Int32'
+});
 
+function hand_r_commander(com_msg) {
+    var com_str = new ROSLIB.Message({
+        data: com_msg
+    });
+    hand_r_pub.publish(com_str);
+};
+
+function hand_l_commander(com_msg) {
+    var com_str = new ROSLIB.Message({
+        data: com_msg
+    });
+    hand_l_pub.publish(com_str);
+};
 
 
 var com_pub = new ROSLIB.Topic({
@@ -325,7 +353,6 @@ var p_order2 = [21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 16, 17, 18, 0, 1
 var est_order = [0,1,2,3,4,5,9,10,11,12,13,14,6,7,8,17,18,19,20,21,22,23,24,15,16,25,26,27,28,29,30,31,32];
 
 function settoPos0() {
-
     var pos1 = [0.0, 0.0, -0.24, 0.6, -0.36, 0.0,
         0.0, 0.0, -0.24, 0.6, -0.36, 0.0,
         0, 0, 0,
@@ -333,9 +360,93 @@ function settoPos0() {
         0, 0,
         -0.3, -0.3, -1.5, 1.27, 1, 0, 1, 0];
 
+    for (let i = 0; i < jtfd.length -1 ; i++) {
+        jtfd[i].value = pos1[p_order[i]];
+    }
+}
 
+function settoPos1() {
+    var pos1 = [0.0, 0.0, -0.24, 0.6, -0.36, 0.0,
+        0.0, 0.0, -0.24, 0.6, -0.36, 0.0,
+        0, 0, 0,
+        0.3, 0.3, 1.5, -1.27, -1, 0, -1, 0,
+        0, 0,
+        -0.3, -0.3, -1.5, 1.27, 1, 0, 1, 0];
 
-    for (let i = 0; i < jtfd.length; i++) {
+    for (let i = 0; i < jtfd.length -1 ; i++) {
+        jtfd[i].value = pos1[p_order[i]];
+    }
+}
+
+function settoPos_ft1() {
+    var pos1 = [0.0, 0.0, -0.24, 0.6, -0.36, 0.0,
+        0.0, 0.0, -0.24, 0.6, -0.36, 0.0,
+        0, 0, 0,
+        0, 0, 1.57, -1.57, -1.57, 0, 0, 0,
+        0, 0,
+        0, 0, -1.57, 1.57, 1.57, 0, 0, 0];
+
+    for (let i = 0; i < jtfd.length -1 ; i++) {
+        jtfd[i].value = pos1[p_order[i]];
+    }
+}
+function settoPos_ft2() {
+    var pos1 = [0.0, 0.0, -0.24, 0.6, -0.36, 0.0,
+        0.0, 0.0, -0.24, 0.6, -0.36, 0.0,
+        0, 0, 0,
+        0, 0, 1.57, -1.57, -1.57, 0, 1.57, 0,
+        0, 0,
+        0, 0, -1.57, 1.57, 1.57, 0, -1.57, 0];
+
+    for (let i = 0; i < jtfd.length -1 ; i++) {
+        jtfd[i].value = pos1[p_order[i]];
+    }
+}
+function settoPos_ft3() {
+    var pos1 = [0.0, 0.0, -0.24, 0.6, -0.36, 0.0,
+        0.0, 0.0, -0.24, 0.6, -0.36, 0.0,
+        0, 0, 0,
+        0, 0, 1.57, -1.57, -1.57, 0, -1.57, 0,
+        0, 0,
+        0, 0, -1.57, 1.57, 1.57, 0, 1.57, 0];
+
+    for (let i = 0; i < jtfd.length -1 ; i++) {
+        jtfd[i].value = pos1[p_order[i]];
+    }
+}
+function settoPos_ft4() {
+    var pos1 = [0.0, 0.0, -0.24, 0.6, -0.36, 0.0,
+        0.0, 0.0, -0.24, 0.6, -0.36, 0.0,
+        0, 0, 0,
+        0, 0, 1.57, -1.57, -1.57, 1.57, 0, 0,
+        0, 0,
+        0, 0, -1.57, 1.57, 1.57, 1.57, 0, 0];
+
+    for (let i = 0; i < jtfd.length -1 ; i++) {
+        jtfd[i].value = pos1[p_order[i]];
+    }
+}
+function settoPos_ft5() {
+    var pos1 = [0.0, 0.0, -0.24, 0.6, -0.36, 0.0,
+        0.0, 0.0, -0.24, 0.6, -0.36, 0.0,
+        0, 0, 0,
+        0, 0, 1.57, -1.57, -1.57, -1.57, 0, 0,
+        0, 0,
+        0, 0, -1.57, 1.57, 1.57, -1.57, 0, 0];
+
+    for (let i = 0; i < jtfd.length -1 ; i++) {
+        jtfd[i].value = pos1[p_order[i]];
+    }
+}
+function settoPos_ft6() {
+    var pos1 = [0.0, 0.0, -0.24, 0.6, -0.36, 0.0,
+        0.0, 0.0, -0.24, 0.6, -0.36, 0.0,
+        0, 0, 0,
+        0, 0, 1.57, -1.57, -1.57, 3.14, 0, 0,
+        0, 0,
+        0, 0, -1.57, 1.57, 1.57, 3.14, 0, 0];
+
+    for (let i = 0; i < jtfd.length -1 ; i++) {
         jtfd[i].value = pos1[p_order[i]];
     }
 }
@@ -350,21 +461,21 @@ var check_time = 0;
 
 function check_node_exist()
 {
-    check_time = check_time + 1;
+    // check_time = check_time + 1;
 
-    let lbox = document.getElementById('syslog_box');
-    let tline = document.createTextNode(check_time);
-    lbox.appendChild(tline);
-    var vr = document.createElement("br");
-    lbox.appendChild(vr);
-    lbox.scrollTop = lbox.scrollHeight;
+    // let lbox = document.getElementById('syslog_box');
+    // let tline = document.createTextNode(check_time);
+    // lbox.appendChild(tline);
+    // var vr = document.createElement("br");
+    // lbox.appendChild(vr);
+    // lbox.scrollTop = lbox.scrollHeight;
 
 
     if (ros.isConnected)
     {
 
         ros.getNodes(function(nodes){
-            console.log(nodes);
+            // console.log(nodes);
             node_boxes = document.querySelectorAll('.tocabi-launch-status');
     
             tocabi_launch_exist = false;
@@ -518,14 +629,19 @@ function positionCommand() {
     var p_arr = [];
 
 
-    for (let i = 0; i < jtfd.length; i++) {
+    for (let i = 0; i < jtfd.length - 1; i++) {
         p_arr.push(parseFloat(jtfd[p_order2[i]].value));
     }
 
+    let cbox1 = document.getElementById('checkbox-1');
+
+    // console.log(cbox1.checked)
+    
+
     var pc_msg = new ROSLIB.Message({
         position: p_arr,
-        traj_time: 3.0,
-        gravity: false,
+        traj_time: parseFloat(jtfd[jtfd.length-1].value),
+        gravity: cbox1.checked,
         relative: false,
 
     });
@@ -648,6 +764,12 @@ function hand_stopper() {
     });
     stop_pub3.publish(com_str);
 }
+function hand_reset() {
+    var com_str = new ROSLIB.Message({
+        data: "reset"
+    });
+    start_pub3.publish(com_str);
+}
 
 
 var p1_progress = 0.0;
@@ -700,7 +822,25 @@ sysstatate_sub.subscribe(function (message) {
     var e2 = document.querySelector('.e2_status');
     var tcs = document.querySelector('.tc_status');
 
+    var fts = document.querySelector('.ft_status');
+    var imus = document.querySelector('.imu_status');
+    var avs = document.querySelector('.avatar_status');
+
     //refresh done clear change_history
+
+    if (message.data[0] == 0) {
+        imus.innerText = 'clear';
+        imus.style.color = "#FF0000"; //red
+    }
+    else if (message.data[0] == 1) {
+        imus.innerText = 'change_history';
+        imus.style.color = "#dcf30c"; //yellow
+
+    }
+    else if (message.data[0] == 2) {
+        imus.innerText = 'done';
+        imus.style.color = "#5EFF00"; //green
+    }
 
     if (message.data[1] == 0) {
         e1.innerText = 'clear';
@@ -716,6 +856,19 @@ sysstatate_sub.subscribe(function (message) {
         e1.style.color = "#5EFF00"; //green
     }
 
+    if (message.data[2] == 0) {
+        fts.innerText = 'clear';
+        fts.style.color = "#FF0000"; //red
+    }
+    else if (message.data[2] == 1) {
+        fts.innerText = 'change_history';
+        fts.style.color = "#dcf30c"; //yellow
+
+    }
+    else if (message.data[2] == 2) {
+        fts.innerText = 'done';
+        fts.style.color = "#5EFF00"; //green
+    }
 
     if (message.data[3] == 0) {
         e2.innerText = 'clear';
@@ -745,14 +898,29 @@ sysstatate_sub.subscribe(function (message) {
     if(message.data[5] == 0)
     {
         tcs.innerText = 'done';
-        tcs.style.color = "#5EFF00";
+        tcs.style.color = "#5EFF00"; //green
     }
-    else if(message.data[5] == 1)
+    else if(message.data[5] == 3)
     {
         tcs.innerText = 'clear';
-        tcs.style.color = "#FF0000";
+        tcs.style.color = "#FF0000"; //red
     }
 
+    if(message.data[6] == 1) //green
+    {
+        avs.innerText = 'done'; 
+        avs.style.color = "#5EFF00"; //green
+    }
+    else if(message.data[6] == 2) //yellow
+    {
+        avs.innerText = 'change_history';
+        avs.style.color = "#dcf30c"; //green
+    }
+    else if(message.data[6] == 3) //red
+    {
+        avs.innerText = 'clear';
+        avs.style.color = "#FF0000";
+    }
 
 })
 
